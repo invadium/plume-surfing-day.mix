@@ -1,0 +1,29 @@
+name: Plume Surfing Day Concept
+order: 1
+-------------------------------
+
+== Intro
+
+*Topic:* Riding plumes in the outer space.
+
+*Goal:* Turn Type-I exotribe into a Type-II exotribe.
+
+=== Elevator Pitch
+
+=== Gameplay Targets
+
+=== Stylistic Targets
+
+=== Core Mechanics
+
+=== Main Game Loop
+
+=== Systems 
+
+=== Screens/States
+
+=== Conflic and Challenges
+
+=== Finish Conditions
+
+
