@@ -1,4 +1,4 @@
-const Z    = 11,
-      name = 'port',
-      DNA  = 'SlideCamera'
+const Z    = 11
+const name = 'port'
+const DNA  = 'SlideCamera'
 
