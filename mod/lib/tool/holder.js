@@ -27,6 +27,8 @@
  */
 'use strict'
 
+// TODO move holder and timer functionality to the native Collider.JAM worm bootloader.
+
 // bootloader states
 const LOADING       = 'loading'
 const BLACKOUT      = 'blackout'
@@ -558,6 +560,14 @@ function updateLoadingStatus() {
         // air raid alert
         bootLabel = ALERT
         cf.color.content = cf.color.contentErr
+    } else if (env.holdTimer) {
+        const signPrefix = sign(env.holdTimer) < 0? '-' : ''
+        const s = abs(ceil(env.holdTimer))
+
+        const ss = s % 60
+        const mm = floor(s / 60)
+        bootLabel = `${signPrefix}${mm}:${ss}`
+
     } else if (res._errors) {
         // a boot-time error
         if (bootLabel !== ERROR) {
@@ -623,7 +633,14 @@ function evoBoot(dt) {
     }
 }
 
+function evoTimers(dt) {
+    if (env.holdTimer) {
+        env.holdTimer -= dt
+    }
+}
+
 function evo(dt) {
+    this.evoTimers(dt)
     this.evoBoot(dt)
     //if (!this.canvasFixed) return
     this.evoContent(dt)
