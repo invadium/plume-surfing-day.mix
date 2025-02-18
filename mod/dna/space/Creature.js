@@ -9,7 +9,7 @@ class Creature extends Body {
             dir:  0,    // points to where the creature is looking at
         }, st) )
 
-        if (env.config.debug) {
+        if (env.debug) {
             this.install([
                 new dna.space.pod.RadiusProbe(),
                 new dna.space.pod.CoordinatesProbe({

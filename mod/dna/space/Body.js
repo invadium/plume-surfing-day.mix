@@ -151,4 +151,30 @@ class Body extends LabFrame {
         return true
     }
 
+    evo(dt) {
+        let dirtyZ = false
+        let Z = Number.MIN_SAFE_INTEGER
+
+        for (let i = 0; i < this._ls.length; i++) {
+            const e = this._ls[i]
+            if (e.evo && !e.dead && !e.paused && (!e.debug || env.debug)) {
+                e.evo(dt)
+            }
+            if (e.Z) {
+                if (e.Z < Z) dirtyZ = true
+                Z = e.Z
+            }
+        }
+
+        if (dirtyZ) this.orderZ()
+    }
+
+    draw() {
+        for (let i = 0; i < this._ls.length; i++) {
+            const e = this._ls[i]
+            if (e.draw && !e.dead && !e.hidden &&(!e.debug || env.debug)) {
+                e.draw()
+            }
+        }
+    }
 }

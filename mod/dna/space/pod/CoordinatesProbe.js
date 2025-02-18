@@ -2,9 +2,12 @@ class CoordinatesProbe {
 
     constructor(st) {
         extend(this, {
-            x: 0,
-            y: 0,
-            r: 20,
+            debug: true,
+            type: 'probe',
+            name: 'coordinatesProbe',
+            x:     0,
+            y:     0,
+            r:     20,
         }, st)
     }
 
