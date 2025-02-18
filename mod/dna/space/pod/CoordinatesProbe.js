@@ -1,4 +1,3 @@
-
 class CoordinatesProbe {
 
     constructor(st) {

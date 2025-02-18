@@ -9,14 +9,15 @@ class Creature extends Body {
             dir:  0,    // points to where the creature is looking at
         }, st) )
 
-        this.install([
-            /*
-            new dna.space.pod.CoordinatesProbe({
-                x: -this.r,
-                y: 1.5 * this.r,
-            })
-            */
-        ])
+        if (env.config.debug) {
+            this.install([
+                new dna.space.pod.RadiusProbe(),
+                new dna.space.pod.CoordinatesProbe({
+                    x: -this.r,
+                    y: 1.5 * this.r,
+                })
+            ])
+        }
     }
 
     evo(dt) {
@@ -60,7 +61,6 @@ class Creature extends Body {
         line( .3*r, r,  .2*r, r + .6*r)
 
         super.draw()
-
         restore()
     }
 
