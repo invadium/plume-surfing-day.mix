@@ -1,22 +1,19 @@
 function tug(planet, __, d, dt) {
     if (!planet || d > planet.gR) {
-        __.momentum.releasePlanet()
+        __.momentum.releaseFromPlanet()
         return
     }
-    __.momentum.boundPlanet(planet)
+    __.momentum.boundToPlanet(planet)
 
     const phi = bearing( __.x, __.y, planet.x, planet.y )
-    __.momentum.push([ cos(phi), sin(phi) ], planet.G)
-
-    // TODO angular momentum MUST be involved
-    const tau = math.normalizeAngle(phi - HALF_PI)
-    if (__.dir < tau) {
-        __.dir += planet.aG * dt
-        if (__.dir > tau) __.dir = tau
-    } else if (__.dir > tau) {
-        __.dir -= planet.aG * dt
-        if (__.dir < tau) __.dir = tau
+    __.momentum.gravityUnit = [ cos(phi), sin(phi) ]
+    if (!__.momentum.surface) {
+        __.momentum.push(__.momentum.gravityUnit, planet.G, dt)
     }
+
+    // setup angular tug - creatures should land on their feet
+    const tau = math.normalizeAngle(phi - HALF_PI)
+    __.momentum.angularTarget(tau)
 }
 
 class GravityEffect {

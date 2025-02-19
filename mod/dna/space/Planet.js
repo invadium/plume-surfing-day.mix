@@ -7,7 +7,7 @@ class Planet extends Body {
     constructor(st) {
         super( extend({
             name: 'planet' + (++id),
-            G:    10,
+            G:    1 * env.tune.G,
             gR:   500,
             aG:   0.25 * PI,
         }, st) )

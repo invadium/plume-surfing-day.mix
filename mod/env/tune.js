@@ -1,7 +1,10 @@
 const tune = {
 
+    G: 1200,
+    surfaceTug: 20,
+
     debug: {
-        mousePushMass:    50,
+        mousePushForce:   2400,
         mouseRestDeltaV: -50,
     }
 }

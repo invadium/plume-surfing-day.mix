@@ -27,6 +27,7 @@ class Creature extends Body {
                     x: -this.r,
                     y: 1.5 * this.r,
                 }), 
+                new dna.space.pod.MomentumProbe(),
                 new dna.space.pod.SelectionIndicator(),
             ])
         }
@@ -74,6 +75,22 @@ class Creature extends Body {
 
         super.draw()
         restore()
+    }
+
+    onBound(planet) {
+        log(`[${this.name}] bounded to the planet [${planet.name}]`)
+    }
+
+    onLanded(planet) {
+        log(`[${this.name}] just landed on the planet [${planet.name}]`)
+    }
+
+    onLaunched(planet) {
+        // TODO create a surface -> space event
+    }
+
+    onRelease(planet) {
+        log(`[${this.name}] released from the planet [${planet.name}]`)
     }
 
 }

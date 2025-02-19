@@ -1,6 +1,6 @@
 function belt() {
     lab.port.spawn( dna.space.Planet, {
-        name: 'Hoth',
+        name: 'Odin',
         x:     0,
         y:     0,
         r:     100,
