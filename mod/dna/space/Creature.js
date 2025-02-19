@@ -14,6 +14,7 @@ class Creature extends Body {
             new dna.space.pod.Momentum({
                 mass: 100,
             }),
+            new dna.space.pod.GravityEffect(),
             new dna.space.pod.SolidCircle({
                 r: 20,
             }),

@@ -6,7 +6,10 @@ class Planet extends Body {
 
     constructor(st) {
         super( extend({
-            name: 'planet' + (++id)
+            name: 'planet' + (++id),
+            G:    10,
+            gR:   500,
+            aG:   0.25 * PI,
         }, st) )
 
         this.install([
@@ -14,6 +17,17 @@ class Planet extends Body {
                 r: this.r,
             })
         ])
+
+        if (env.debug) {
+            this.install([
+                new dna.space.pod.RadiusProbe(),
+                new dna.space.pod.CoordinatesProbe({
+                    x: -this.r,
+                    y: 1.5 * this.r,
+                }), 
+                new dna.space.pod.SelectionIndicator(),
+            ])
+        }
     }
 
     draw() {

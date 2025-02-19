@@ -7,7 +7,7 @@ class Momentum {
             mass:      100,
             speedV:    [10, 0],
             rotSpeed:  0,
-            bound:  null,
+            bound:     null,
         }, st)
     }
 
@@ -30,21 +30,34 @@ class Momentum {
         this.speedV[1] = sin(phi) * newSpeed
     }
 
+    boundPlanet(bound) {
+        this.bound = bound
+    }
+
+    releasePlanet() {
+        this.bound = null
+    }
+
     evo(dt) {
+        const __ = this.__
+        const bound = this.bound
         // apply angular momentum
-        this.__.dir += this.rotSpeed * dt
+        __.dir += this.rotSpeed * dt
 
         // movement
-        const nx = this.__.x + this.speedV[0] * dt,
-              ny = this.__.y + this.speedV[1] * dt
+        let nx = __.x + this.speedV[0] * dt,
+            ny = __.y + this.speedV[1] * dt
         
-        // TODO planet collision resolution for x?
-        // ...
-        // everything is fine, proceed with the actual movement
-        this.__.x = nx
+        if (bound) {
+            const d = dist(bound.x, bound.y, nx, __.y)
+            if (d <= __.r + bound.r) nx = __.x
+        }
 
-        // TODO collision resolution in y-axis
-        // ...
-        this.__.y = ny
+        if (bound) {
+            const d = dist(bound.x, bound.y, __.x, ny)
+            if (d <= __.r + bound.r) ny = __.y
+        }
+        __.x = nx
+        __.y = ny
     }
 }
