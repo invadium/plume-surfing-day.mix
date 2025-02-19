@@ -8,6 +8,12 @@ class Planet extends Body {
         super( extend({
             name: 'planet' + (++id)
         }, st) )
+
+        this.install([
+            new dna.space.pod.SolidCircle({
+                r: this.r,
+            })
+        ])
     }
 
     draw() {
@@ -20,6 +26,8 @@ class Planet extends Body {
         lineWidth(3)
         stroke( hsl(.35, .42, .56) )
         circle( 0, 0, this.r )
+
+        super.draw()
 
         restore()
     }

@@ -2,7 +2,7 @@ class RadiusProbe {
 
     constructor(st) {
         extend(this, {
-            debug:  true,
+            probe:  true,
             type:  'probe',
             name:  'radiusProbe',
         }, st)

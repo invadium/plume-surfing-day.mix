@@ -4,10 +4,20 @@ class Creature extends Body {
 
     constructor(st) {
         super( extend({
+            type: 'creature',
             team: 0,
-            r:    20,
+            r:    30,
             dir:  0,    // points to where the creature is looking at
         }, st) )
+
+        this.install([
+            new dna.space.pod.Momentum({
+                mass: 100,
+            }),
+            new dna.space.pod.SolidCircle({
+                r: 20,
+            }),
+        ])
 
         if (env.debug) {
             this.install([
@@ -15,17 +25,18 @@ class Creature extends Body {
                 new dna.space.pod.CoordinatesProbe({
                     x: -this.r,
                     y: 1.5 * this.r,
-                })
+                }), 
+                new dna.space.pod.SelectionIndicator(),
             ])
         }
     }
 
     evo(dt) {
-        this.dir -= HALF_PI * dt
+        super.evo(dt)
     }
 
     draw() {
-        const r = this.r,
+        const r = .5 * this.r, // calculate the visual base radius
               R = 2 * r,
               rh = .5 * r,
               hb = -.75 * r,

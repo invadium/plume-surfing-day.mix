@@ -157,7 +157,7 @@ class Body extends LabFrame {
 
         for (let i = 0; i < this._ls.length; i++) {
             const e = this._ls[i]
-            if (e.evo && !e.dead && !e.paused && (!e.debug || env.debug)) {
+            if (e.evo && !e.dead && !e.paused && (!e.probe || env.debug)) {
                 e.evo(dt)
             }
             if (e.Z) {
@@ -172,7 +172,7 @@ class Body extends LabFrame {
     draw() {
         for (let i = 0; i < this._ls.length; i++) {
             const e = this._ls[i]
-            if (e.draw && !e.dead && !e.hidden &&(!e.debug || env.debug)) {
+            if (e.draw && !e.dead && !e.hidden &&(!e.probe || env.debug)) {
                 e.draw()
             }
         }

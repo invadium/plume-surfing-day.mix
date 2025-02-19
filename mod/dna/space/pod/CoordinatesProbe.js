@@ -2,7 +2,7 @@ class CoordinatesProbe {
 
     constructor(st) {
         extend(this, {
-            debug: true,
+            probe: true,
             type: 'probe',
             name: 'coordinatesProbe',
             x:     0,
@@ -12,11 +12,18 @@ class CoordinatesProbe {
     }
 
     draw() {
-        const r = this.r
+        const r  = this.r,
+              hr = 0.5 * r
 
         // assume we are at the body's origin
         save()
         rotate(-this.__.dir)
+
+        stroke('#ff0000')
+        lineWidth(1)
+        line(0,  -hr, 0,   hr)
+        line(-hr, 0,  hr,  0 )
+
         translate(this.x, this.y)
 
         stroke('#ff0000')
@@ -31,7 +38,7 @@ class CoordinatesProbe {
         baseTop()
         alignRight()
         font(env.style.font.debug.head)
-        text(`${round(this.__.x * 10)/10}:${round(this.__.y * 10)/10}`, 0, 0)
+        text(`${round(this.__.x)}:${round(this.__.y)}`, 0, 0)
 
         restore()
     }

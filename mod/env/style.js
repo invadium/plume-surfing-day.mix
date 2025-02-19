@@ -19,7 +19,7 @@ const style = {
         },
 
         debug: {
-            family: 'tron',
+            family: 'moon',
             size: 24,
         },
     },
