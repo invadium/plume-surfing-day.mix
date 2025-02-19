@@ -86,7 +86,7 @@ class Creature extends Body {
     }
 
     onLaunched(planet) {
-        // TODO create a surface -> space event
+        log(`[${this.name}] crossed the Karmal line of [${planet.name}]`)
     }
 
     onRelease(planet) {

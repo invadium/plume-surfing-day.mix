@@ -7,7 +7,8 @@ function tug(planet, __, d, dt) {
 
     const phi = bearing( __.x, __.y, planet.x, planet.y )
     __.momentum.gravityUnit = [ cos(phi), sin(phi) ]
-    if (!__.momentum.surface) {
+    if (!__.surfaced) {
+        // pull down to the surface
         __.momentum.push(__.momentum.gravityUnit, planet.G, dt)
     }
 

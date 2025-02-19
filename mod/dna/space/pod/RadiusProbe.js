@@ -19,6 +19,12 @@ class RadiusProbe {
             stroke('#ee4010')
             circle(0, 0, __.gR)
         }
+
+        if (__.kR) {
+            // show Karmal line
+            stroke('#2060ee')
+            circle(0, 0, __.kR)
+        }
     }
 
 }

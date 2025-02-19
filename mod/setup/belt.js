@@ -8,9 +8,8 @@ function belt() {
 
     pin.one = lab.port.spawn( dna.space.Creature, {
         name: 'one',
-        x:    0,
-        y:    -140,
+        x:    -150,
+        y:    -240,
     })
-
 }
 belt.Z = 21

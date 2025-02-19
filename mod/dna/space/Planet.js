@@ -9,6 +9,7 @@ class Planet extends Body {
             name: 'planet' + (++id),
             G:    1 * env.tune.G,
             gR:   500,
+            kR:   400,
             aG:   0.25 * PI,
         }, st) )
 
@@ -28,6 +29,21 @@ class Planet extends Body {
                 new dna.space.pod.SelectionIndicator(),
             ])
         }
+    }
+
+    worldToPolar(wx, wy) {
+        const lxy = this.lxy(wx, wy)
+        return [
+            atan2(lxy[1], lxy[0]),
+            math.length(lxy[0], lxy[1]),
+        ]
+    }
+
+    polarToWorld(tau, r) {
+        return this.pxy(
+            cos(tau) * r,
+            sin(tau) * r
+        )
     }
 
     draw() {
