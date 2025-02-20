@@ -46,10 +46,13 @@ class Momentum {
     }
 
     boundToPlanet(bound) {
+        if (this.surface) return this.bound
+
         if ((!this.bound || this.bound !== bound) && isFun(this.__.onBound)) {
             this.__.onBound(bound)
         }
         this.bound = bound
+        return this.bound
     }
 
     releaseFromPlanet() {
@@ -68,17 +71,19 @@ class Momentum {
     }
 
     evo(dt) {
-        const __    = this.__,
-              bound = this.bound,
-              sV    = this.speedV
+        const __      = this.__,
+              bound   = this.bound,
+              surface = this.surface,
+              sV      = this.speedV
 
         // handle rotation
-        if (bound) {
-            // apply angular tug
+        if (surface) {
             const tau = this.dirTargetAngle
             this.__.dir = this.dirTargetAngle
 
-            /*
+        } else if (bound) {
+            // apply angular tug
+            const tau = this.dirTargetAngle
             let left = true
             if (__.dir < tau) {
                 if (tau - __.dir < PI) left = false
@@ -95,7 +100,6 @@ class Momentum {
                 __.dir += bound.aG * dt
                 if (__.dir > tau) __.dir = tau
             }
-            */
 
         } else {
             // apply angular momentum
@@ -103,9 +107,7 @@ class Momentum {
         }
 
         if (__.surfaced) {
-            const surface = this.surface,
-                  //polar   = surface.worldToPolar(__.x, __.y),
-                  polar   = __.polar,
+            const polar   = __.polar,
                   phi     = polar[0],
                   r       = polar[1],
                   horizontalSpeed = sV[0],

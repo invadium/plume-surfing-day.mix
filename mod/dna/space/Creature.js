@@ -1,10 +1,13 @@
 const Body = require('dna/space/Body')
 
+let id = 0
+
 class Creature extends Body {
 
     constructor(st) {
         super( extend({
             type: 'creature',
+            name: 'creature' + (++id),
             team: 0,
             r:    30,
             dir:  0,    // points to where the creature is looking at

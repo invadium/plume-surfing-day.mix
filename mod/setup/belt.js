@@ -15,6 +15,14 @@ function belt() {
         kR:    350,
         gR:    400,
     })
+    lab.port.spawn( dna.space.Planet, {
+        name: 'Lugaluru',
+        x:     350,
+        y:     350,
+        r:     120,
+        kR:    400,
+        gR:    600,
+    })
 
 
     pin.inky = lab.port.spawn( dna.space.Creature, {

@@ -23,7 +23,7 @@ class SpaceCamera extends SlideCamera {
             }
         }
         */
-        this.zoomTarget *= 1.1
+        this.zoomTarget *= 1 + env.tune.port.zoomFactor/10
         if (this.zoomTarget >= this.maxZoom) this.zoomTarget = this.maxZoom
     }
 
@@ -40,7 +40,7 @@ class SpaceCamera extends SlideCamera {
             }
         }
         */
-        this.zoomTarget *= 0.9
+        this.zoomTarget *= 1 - env.tune.port.zoomFactor/10
         if (this.zoomTarget < this.minZoom) this.zoomTarget = this.minZoom
     }
 

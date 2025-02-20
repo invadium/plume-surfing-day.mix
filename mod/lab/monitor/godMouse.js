@@ -1,5 +1,5 @@
 function evo(dt) {
-    if (!env.debug || !env.selected || !(env.selected instanceof dna.space.Creature)) return
+    if (!env.selected || !(env.selected instanceof dna.space.Creature)) return
 
     const target = env.selected
 

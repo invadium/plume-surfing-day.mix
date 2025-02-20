@@ -5,7 +5,8 @@ const tune = {
     surfaceTug: 20,
 
     port: {
-        slideSpeed: 500,
+        slideSpeed: 1000,
+        zoomFactor: 2,
     },
 
     debug: {

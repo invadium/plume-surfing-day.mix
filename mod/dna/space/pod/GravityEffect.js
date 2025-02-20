@@ -3,13 +3,13 @@ function tug(planet, __, d, dt) {
         __.momentum.releaseFromPlanet()
         return
     }
-    __.momentum.boundToPlanet(planet)
+    const boundedPlanet = __.momentum.boundToPlanet(planet)
 
-    const phi = bearing( __.x, __.y, planet.x, planet.y )
+    const phi = bearing( __.x, __.y, boundedPlanet.x, boundedPlanet.y )
     __.momentum.gravityUnit = [ cos(phi), sin(phi) ]
     if (!__.surfaced) {
         // pull down to the surface
-        __.momentum.push(__.momentum.gravityUnit, planet.G, dt)
+        __.momentum.push(__.momentum.gravityUnit, boundedPlanet.G, dt)
     }
 
     // setup angular tug - creatures should land on their feet
