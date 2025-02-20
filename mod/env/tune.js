@@ -4,6 +4,10 @@ const tune = {
     friction:   10,
     surfaceTug: 20,
 
+    port: {
+        slideSpeed: 500,
+    },
+
     debug: {
         mouse: {
             pushForce:    2400,

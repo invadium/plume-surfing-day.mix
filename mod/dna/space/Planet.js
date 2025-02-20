@@ -6,17 +6,21 @@ class Planet extends Body {
 
     constructor(st) {
         super( extend({
-            name: 'planet' + (++id),
-            G:    1 * env.tune.G,
-            gR:   500,
-            kR:   400,
-            aG:   0.25 * PI,
+            name:  'planet' + (++id),
+               G:   1 * env.tune.G,
+               r:   100,
+              kR:   400,
+              gR:   500,
+              aG:   0.25 * PI,
         }, st) )
 
         this.install([
             new dna.space.pod.SolidCircle({
                 r: this.r,
-            })
+            }),
+            new dna.space.pod.Rotation({
+                rspeed: 0.025 * PI,
+            }),
         ])
 
         if (env.debug) {
@@ -49,6 +53,11 @@ class Planet extends Body {
     draw() {
         save() 
         translate( this.x, this.y )
+        rotate(this.dir)
+
+        lineWidth(3)
+        stroke( hsl(.35, .42, .56) )
+        line(0, -this.r * 1.1, 0, this.r * 1.1)
 
         fill( hsl(.47, .27, .25) )
         circle( 0, 0, this.r )

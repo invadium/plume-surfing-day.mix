@@ -76,13 +76,27 @@ class Momentum {
         if (bound) {
             // apply angular tug
             const tau = this.dirTargetAngle
+            this.__.dir = this.dirTargetAngle
+
+            /*
+            let left = true
             if (__.dir < tau) {
-                __.dir += bound.aG * dt
-                if (__.dir > tau) __.dir = tau
+                if (tau - __.dir < PI) left = false
+
             } else if (__.dir > tau) {
+                if (__.dir - tau > PI) left = false
+
+            }
+
+            if (left) {
                 __.dir -= bound.aG * dt
                 if (__.dir < tau) __.dir = tau
+            } else {
+                __.dir += bound.aG * dt
+                if (__.dir > tau) __.dir = tau
             }
+            */
+
         } else {
             // apply angular momentum
             __.dir += this.rotSpeed * dt

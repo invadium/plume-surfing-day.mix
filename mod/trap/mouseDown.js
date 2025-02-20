@@ -1,6 +1,16 @@
 function mouseDown(e) {
 
-    if (e.button === 2) {
+    if (e.button === 1) {
+        // middle click
+        const ls = []
+        const last = lab.port.pick( mouse.x, mouse.y, ls )
+
+        if (last && last instanceof dna.space.Planet) {
+            lab.port.speed = env.tune.port.slideSpeed * lab.port.scale
+            lab.port.follow(last, true)
+        }
+
+    } else if (e.button === 2) {
         // right click
 
         // log world coordinates
