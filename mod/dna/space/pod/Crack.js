@@ -20,9 +20,9 @@ class Crack {
         //const w = this.__.polarToWorld(this.tau, this.r2)
         const lx = cos(this.tau) * this.r2
         const ly = sin(this.tau) * this.r2
-        lib.vfx.plume(this.__, lx, ly, '#ffffff80', intensity)
-        //lib.vfx.plume(lab.port, w[0], w[1], '#ee2000', intensity)
+        //lib.vfx.plume(this.__, lx, ly, '#ffffff80', intensity)
         //lib.vfx.ouch(lab.port, w[0], w[1], '#ee2000')
+        lib.vfx.plume(this.__, lx, ly, this.tau, '#ffffff80', intensity)
     }
 
     evo(dt) {

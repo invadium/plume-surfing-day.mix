@@ -121,6 +121,13 @@ class Momentum {
             // TODO test against each single solid bottom
             if (polar[1] <= surface.r + __.r) { 
                 // on the surface
+                if (!__.touchingSurface) {
+                    // jump touchdown!
+                    const lx = cos(phi) * surface.r
+                    const ly = sin(phi) * surface.r
+                    lib.vfx.touchdown(surface, lx, ly, phi, '#c0c0c0a0', 5 + abs(verticalSpeed/10))
+                    log(`landing speed: ${5 + abs(verticalSpeed/10)}`)
+                }
                 __.touchingSurface = true
                 polar[1] = surface.r + __.r
                 sV[1] = 0 // reset vertical movement
@@ -180,20 +187,27 @@ class Momentum {
                 }
 
                 if (surfaceContact && this.gravityUnit) {
-                    if (!this.surface && isFun(__.onLanded)) {
-                        __.onLanded(bound)
-                    }
                     __.surfaced = true
                     this.surface = bound
                     const gU = this.gravityUnit
                     const proj = math.dotProduct(sV[0], sV[1], gU[0], gU[1])
                     sV[0] -= gU[0] * proj
                     sV[1] -= gU[1] * proj
+                    const landingSpeed = sV[1]
 
                     const speed = math.length(sV[0], sV[1])
                     sV[0] = speed
                     sV[1] = 0
                     __.polar = bound.worldToPolar(__.x, __.y)
+
+                    const lx = cos(__.polar[0]) * bound.r
+                    const ly = sin(__.polar[0]) * bound.r
+                    lib.vfx.touchdown(bound, lx, ly, __.polar[0], '#c0c0c0a0', 10 + abs(landingSpeed/5))
+                    log(`landing speed: ${10 + abs(landingSpeed)/5}`)
+
+                    if (!this.surface && isFun(__.onLanded)) {
+                        __.onLanded(bound)
+                    }
                 }
             }
             __.x = nx

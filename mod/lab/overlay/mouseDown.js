@@ -39,6 +39,7 @@ function mouseDown(e) {
                 env.selected = null
             }
             lib.vfx.ouch(lab.port, w.x, w.y, '#ee4000')
+            //lib.vfx.touchdown(lab.port, w.x, w.y, '#ffff00')
         }
     }
 }

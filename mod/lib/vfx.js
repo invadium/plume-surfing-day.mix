@@ -1,6 +1,6 @@
 let id = 0
 
-function plume(target, x, y, color, intensity) {
+function plume(target, x, y, tau, color, intensity) {
     const s = ry(.001)
     target.spawn(dna.Emitter, {
         x: x,
@@ -12,7 +12,7 @@ function plume(target, x, y, color, intensity) {
         radius: 2,
         size: 1*s, vsize: 2*s,
         speed: 40*s, vspeed: 200*s,
-        angle: 1.5 * PI - 0.2, spread: 0.4,
+        angle: tau - .2, spread: .4,
         minLifespan: 1, vLifespan: 1,
         drawParticle: function() {
             fill(this.color)
@@ -42,6 +42,26 @@ function ouch(target, x, y, color) {
     })
 }
 
+function touchdown(target, x, y, tau, color, intensity) {
+    const s = ry(.001)
+    target.spawn(dna.Emitter, {
+        x: x,
+        y: y,
+        color: color,
+        lifespan: 0.05,
+        force: 500 * intensity,
+        radius: 0,
+        size: s, vsize: 3,
+        speed: 50*s, vspeed: 80*s,
+        angle: tau - .4 * PI, spread: .8 * PI,
+        minLifespan: .4, vLifespan: 0.5,
+        drawParticle: function() {
+            fill(this.color)
+            rect(floor(this.x), floor(this.y), this.r, this.r)
+        }
+    })
+}
+
 
 function death(target, x, y, color) {
     const s = ry(.001)
@@ -64,26 +84,6 @@ function death(target, x, y, color) {
     })
 }
 
-function touchdown(target, x, y, color, intensity) {
-    const s = ry(.001)
-    target.spawn(dna.Emitter, {
-        x: x,
-        y: y,
-        //dx: -70*s,
-        color: color,
-        lifespan: 0.01,
-        force: 2000 * intensity,
-        radius: 0,
-        size: 4*s, vsize: 0,
-        speed: 100*s, vspeed: 40*s,
-        angle: 0.96*PI, spread: 0.1 * PI,
-        minLifespan: .4, vLifespan: 0.6,
-        drawParticle: function() {
-            fill(this.color)
-            rect(floor(this.x), floor(this.y), this.r, this.r)
-        }
-    })
-}
 
 function teleport(target, x, y, color) {
     const s = ry(.001)
