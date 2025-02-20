@@ -4,6 +4,10 @@ const tune = {
     friction:   10,
     surfaceTug: 20,
 
+    plume: {
+        effectArea: 0.2,
+    },
+
     port: {
         slideSpeed: 1000,
         zoomFactor: 2,
