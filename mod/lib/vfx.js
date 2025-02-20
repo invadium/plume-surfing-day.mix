@@ -1,3 +1,26 @@
+let id = 0
+
+function plume(target, x, y, color, intensity) {
+    const s = ry(.001)
+    target.spawn(dna.Emitter, {
+        x: x,
+        y: y,
+        //dx: -70*s,
+        color: color,
+        lifespan: 0.5,
+        force: 750 * intensity,
+        radius: 2,
+        size: 1*s, vsize: 2*s,
+        speed: 40*s, vspeed: 200*s,
+        angle: 1.5 * PI - 0.2, spread: 0.4,
+        minLifespan: 1, vLifespan: 1,
+        drawParticle: function() {
+            fill(this.color)
+            rect(floor(this.x), floor(this.y), this.r, this.r)
+        }
+    })
+}
+
 function ouch(target, x, y, color) {
     const s = ry(.001)
     target.spawn(dna.Emitter, {
@@ -18,6 +41,7 @@ function ouch(target, x, y, color) {
         }
     })
 }
+
 
 function death(target, x, y, color) {
     const s = ry(.001)
@@ -40,7 +64,7 @@ function death(target, x, y, color) {
     })
 }
 
-function touchdown(target, x, y, color, intencity) {
+function touchdown(target, x, y, color, intensity) {
     const s = ry(.001)
     target.spawn(dna.Emitter, {
         x: x,
@@ -48,7 +72,7 @@ function touchdown(target, x, y, color, intencity) {
         //dx: -70*s,
         color: color,
         lifespan: 0.01,
-        force: 2000 * intencity,
+        force: 2000 * intensity,
         radius: 0,
         size: 4*s, vsize: 0,
         speed: 100*s, vspeed: 40*s,

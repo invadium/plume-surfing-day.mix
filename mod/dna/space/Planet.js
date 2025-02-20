@@ -21,6 +21,11 @@ class Planet extends Body {
             new dna.space.pod.Rotation({
                 rspeed: 0.025 * PI,
             }),
+            new dna.space.pod.Crack({
+                tau: math.rnda(),
+                r1: this.r * .5,
+                r2: this.r,
+            }),
         ])
 
         if (env.debug) {
@@ -50,11 +55,22 @@ class Planet extends Body {
         )
     }
 
+    shake() {
+        const cracks = this._ls.filter(e => e instanceof dna.space.pod.Crack)
+        // TODO calculate tectonic energy and split over all active plumes
+        cracks.forEach(crack => crack.plume(100))
+    }
+
+    // TODO vent out excessive tectonic energy
+    vent() {
+    }
+
     draw() {
         save() 
         translate( this.x, this.y )
         rotate(this.dir)
 
+        // polar axis
         lineWidth(3)
         stroke( hsl(.35, .42, .56) )
         line(0, -this.r * 1.1, 0, this.r * 1.1)

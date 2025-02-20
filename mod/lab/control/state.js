@@ -76,6 +76,10 @@ class GroupState {
         this.states.forEach(state => deactivateState(state))
         this.deactivated = true
     }
+
+    lead() {
+        return this.states[0]
+    }
 }
 
 // include a new state node into the state controller
@@ -320,9 +324,20 @@ function forceTransitTo(fuzzyTarget, st) {
     transitTo(fuzzyTarget, st, true)
 }
 
-// get the current active state
+// get the current active state name
 function currentState() {
     return env.state
+}
+
+function stateNode() {
+    const state = stateDir[env.state]
+    if (!state) return
+
+    if (state instanceof GroupState) {
+        return state.lead()
+    } else {
+        return state
+    }
 }
 
 // get the current active transition
