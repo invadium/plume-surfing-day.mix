@@ -40,6 +40,12 @@ class Momentum {
         this.speedV[1] += acceleration * dt
     }
 
+    surfaceRun(dt) {
+        if (this.getSurfaceSpeed() < this.__.maxSurfaceSpeed) {
+            this.surfacePush(this.__.surfacePushForce, dt)
+        }
+    }
+
     surfaceJump(acceleration) {
         if (!this.isTouchingSurface()) return
         this.speedV[1] += acceleration
@@ -64,10 +70,6 @@ class Momentum {
 
     angularTarget(tau) {
         this.dirTargetAngle = tau
-    }
-
-    isTouchingSurface() {
-        return (this.__.polar[1] === this.surface.r + this.__.r)
     }
 
     evo(dt) {
@@ -214,4 +216,14 @@ class Momentum {
             __.y = ny
         }
     }
+
+    isTouchingSurface() {
+        return (this.__.polar[1] === this.surface.r + this.__.r)
+    }
+
+    getSurfaceSpeed() {
+        if (!this.surface) return -1
+        return abs(this.speedV[0])
+    }
+
 }

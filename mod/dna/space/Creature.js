@@ -11,6 +11,10 @@ class Creature extends Body {
             tribe: 0,
             r:     30,
             dir:   0,    // points to where the creature is looking at
+
+            maxSurfaceSpeed:         env.tune.creature.baseSurfaceSpeed,
+            surfacePushForce:        env.tune.creature.baseSurfaceForce,
+            surfaceJumpAcceleration: env.tune.creature.baseSurfaceJump,
         }, st) )
 
         this.install([
@@ -21,6 +25,7 @@ class Creature extends Body {
             new dna.space.pod.SolidCircle({
                 r: 20,
             }),
+            new dna.space.pod.RandomWalkerBot(),
         ])
 
         if (env.debug) {
@@ -32,6 +37,10 @@ class Creature extends Body {
                 //}), 
                 new dna.space.pod.MomentumProbe(),
                 new dna.space.pod.SelectionIndicator(),
+                new dna.space.pod.BotProbe({
+                    x: -this.r * .8,
+                    y:  this.r * .8,
+                }),
             ])
         }
         this.color = env.style.color.tribe[this.tribe]
