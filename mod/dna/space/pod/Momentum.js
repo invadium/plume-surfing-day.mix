@@ -205,7 +205,7 @@ class Momentum {
                     const lx = cos(__.polar[0]) * bound.r
                     const ly = sin(__.polar[0]) * bound.r
                     lib.vfx.touchdown(bound, lx, ly, __.polar[0], '#c0c0c0a0', 10 + abs(landingSpeed/5))
-                    log(`landing speed: ${10 + abs(landingSpeed)/5}`)
+                    //log(`landing speed: ${10 + abs(landingSpeed)/5}`)
 
                     if (!this.surface && isFun(__.onLanded)) {
                         __.onLanded(bound)

@@ -18,7 +18,7 @@ class RandomWalkerBot {
 
     selectNextAction() {
         const nextAction = lib.source.bot.rndi(JUMPING + 1)
-        log(`[${this.__.name}] next action: ${this.actionName(nextAction)}`)
+        //log(`[${this.__.getTitle()}] next action: ${this.actionName(nextAction)}`)
 
         this.state = nextAction
         this.lastDecision = env.time

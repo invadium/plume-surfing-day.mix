@@ -34,19 +34,31 @@ function belt() {
         x:    -150,
         y:    -240,
     })
-
     pin.blinky = lab.port.spawn( dna.space.Creature, {
         tribe,
         alias: 'blinky',
         x:    -80,
         y:    -200,
     })
-
     pin.pinky = lab.port.spawn( dna.space.Creature, {
         tribe,
         alias: 'pinky',
         x:     20,
         y:    -180,
+    })
+
+    tribe = 1
+    pin.inky = lab.port.spawn( dna.space.Creature, {
+        tribe,
+        alias: 'clyde',
+        x:    0,
+        y:    240,
+    })
+    pin.blinky = lab.port.spawn( dna.space.Creature, {
+        tribe,
+        alias: 'jeff',
+        x:    -150,
+        y:    350,
     })
 }
 belt.Z = 21

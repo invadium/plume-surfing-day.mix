@@ -1,7 +1,7 @@
 const tune = {
 
     G:          2400,
-    friction:   10,
+    friction:   20,
     surfaceTug: 20,
 
     port: {
@@ -15,8 +15,11 @@ const tune = {
 
     creature: {
         baseSurfaceSpeed: 50,
-        baseSurfaceForce: 2400,
+        baseSurfaceForce: 4000,
         baseSurfaceJump:  40,
+        baseHP:           100,
+        baseHitForce:     20,
+        hitDelay:         1,
     },
 
     source: {

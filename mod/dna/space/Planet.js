@@ -8,6 +8,7 @@ class Planet extends Body {
         super( extend({
             name:  'planet' + (++id),
             type:   0,
+           tribe:   0,
                G:   1 * env.tune.G,
                r:   100,
               kR:   400,
@@ -81,8 +82,10 @@ class Planet extends Body {
         fill( this.color.base )
         circle( 0, 0, this.r )
 
-        lineWidth(3)
-        stroke( this.color.high )
+        // surface
+        lineWidth(4)
+        const c = env.style.color.tribe[this.tribe].high
+        stroke( c )
         circle( 0, 0, this.r )
 
         super.draw()

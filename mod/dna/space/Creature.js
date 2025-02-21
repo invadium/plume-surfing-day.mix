@@ -9,12 +9,16 @@ class Creature extends Body {
             type: 'creature',
             name: 'creature' + (++id),
             tribe: 0,
+            hp:    env.tune.creature.baseHP,
             r:     30,
             dir:   0,    // points to where the creature is looking at
 
             maxSurfaceSpeed:         env.tune.creature.baseSurfaceSpeed,
             surfacePushForce:        env.tune.creature.baseSurfaceForce,
             surfaceJumpAcceleration: env.tune.creature.baseSurfaceJump,
+            hitForce:                env.tune.creature.baseHitForce,
+
+            hitLog: [],
         }, st) )
 
         this.install([
@@ -48,10 +52,55 @@ class Creature extends Body {
 
     wakeUp() {
         // TODO change the goal/state (e.g. idle -> mining or mining -> warming)
-        log(`[${this.name}] is waking up!`)
+        log(`[${this.getTitle()}] is waking up!`)
 
         if (this.surfaced) {
             this.momentum.surfaceJump(env.tune.debug.mouse.jumpAcceleration)
+        }
+    }
+
+    registerHit(source) {
+        if (this.hitLog.length > 0 && this.hitLog[0].timestamp + 2*env.tune.creature.hitDelay < env.time) {
+            this.hitLog.shift()
+        }
+
+        let lastHit  = null
+        this.hitLog.forEach(e => {
+            if (e.source === source) lastHit = e
+        })
+
+        if (lastHit && lastHit.timestamp + env.tune.creature.hitDelay > env.time) return false
+        this.hitLog.push({
+            timestamp: env.time,
+            source:    source,
+        })
+        source.hitLog.push({
+            timestamp: env.time,
+            source:    this,
+        })
+        return true
+    }
+
+    damage(hits, source) {
+        this.hp -= hits
+        // TODO particle effect
+        if (this.momentum.surface) {
+            const surface = this.momentum.surface,
+                  lx = cos(this.polar[0]) * surface.r,
+                  ly = sin(this.polar[0]) * surface.r
+            lib.vfx.touchdown(surface, lx, ly, this.polar[0], this.color.high, 15)
+        }
+        if (this.hp <= 0) kill(this, source)
+    }
+
+    hit(source) {
+        if (!(source instanceof dna.space.Creature) || this.tribe === source.tribe) return
+
+        if (this.registerHit(source)) {
+            //log(`${this.getTitle()} battles with ${source.getTitle()}`)
+            // TODO determine the amount of damage based on speed/hight etc
+            this.damage(source.hitForce, source)
+            source.damage(this.hitForce, this)
         }
     }
 
@@ -109,19 +158,29 @@ class Creature extends Body {
     }
 
     onBound(planet) {
-        log(`[${this.name}] bounded to the planet [${planet.name}]`)
+        log(`${this.getTitle()} bounded to the planet [${planet.name}]`)
     }
 
     onLanded(planet) {
-        log(`[${this.name}] just landed on the planet [${planet.name}]`)
+        log(`${this.getTitle()} just landed on the planet [${planet.name}]`)
     }
 
     onLaunched(planet) {
-        log(`[${this.name}] crossed the Karmal line of [${planet.name}]`)
+        log(`${this.getTitle()} crossed the Karmal line of [${planet.name}]`)
     }
 
     onRelease(planet) {
-        log(`[${this.name}] released from the planet [${planet.name}]`)
+        log(`${this.getTitle()} released from the planet [${planet.name}]`)
+    }
+
+    kill(source) {
+        if (!source) throw new Error('why am I here?')
+        this.__.detach(this)
+        log(`${this.getTitle()} is killed by ${source.getTitle()}`)
+    }
+
+    getTitle() {
+        return `[@${this.tribe}::${this.name}]`
     }
 
 }
