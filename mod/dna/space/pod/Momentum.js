@@ -126,9 +126,9 @@ class Momentum {
                     const lx = cos(phi) * surface.r
                     const ly = sin(phi) * surface.r
                     lib.vfx.touchdown(surface, lx, ly, phi, '#c0c0c0a0', 5 + abs(verticalSpeed/10))
-                    log(`landing speed: ${5 + abs(verticalSpeed/10)}`)
+                    // log(`landing speed: ${5 + abs(verticalSpeed/10)}`)
+                    __.touchingSurface = true
                 }
-                __.touchingSurface = true
                 polar[1] = surface.r + __.r
                 sV[1] = 0 // reset vertical movement
 
@@ -136,7 +136,7 @@ class Momentum {
                 if (sV[0] > 0) {
                     sV[0] -= env.tune.friction * dt
                     if (sV[0] < 0) sV[0] = 0 // full stop
-                } else if (sV[1] < 0) {
+                } else if (sV[0] < 0) {
                     sV[0] += env.tune.friction * dt
                     if (sV[0] > 0) sV[0] = 0 // full stop
                 }

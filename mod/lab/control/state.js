@@ -329,7 +329,7 @@ function currentState() {
     return env.state
 }
 
-function stateNode() {
+function leadNode() {
     const state = stateDir[env.state]
     if (!state) return
 
