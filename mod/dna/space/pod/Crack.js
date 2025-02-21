@@ -41,8 +41,15 @@ class Crack {
         rotate(this.tau)
 
         lineWidth(2)
-        stroke( hsl(.1, .42, .56) )
-        line(this.r1, 0, this.r2, 0)
+        //stroke( hsl(.1, .42, .56) )
+        //fill( hsl(.05, .4, .5) )
+        fill( hsl(.05, .4, .5), hsl(.45, 42, .4) )
+
+        moveTo(this.r1,  0)
+        lineTo(this.r2, -10)
+        lineTo(this.r2,  10)
+        closePath()
+        shape()
 
         restore()
     }
