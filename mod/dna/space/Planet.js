@@ -28,6 +28,7 @@ class Planet extends Body {
                 r1: this.r * .5,
                 r2: this.r,
             }),
+            new dna.space.pod.PlanetOwnerMonitor(),
         ])
 
         if (env.debug) {
@@ -91,5 +92,9 @@ class Planet extends Body {
         super.draw()
 
         restore()
+    }
+
+    onCapture(tribe, prevTribe) {
+        log(`${this.name} is captured by @${tribe}`)
     }
 }

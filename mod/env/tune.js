@@ -9,6 +9,10 @@ const tune = {
         zoomFactor: 2,
     },
 
+    planet: {
+        captureTime: 10,
+    },
+
     plume: {
         effectArea: 0.2,
     },
@@ -20,6 +24,10 @@ const tune = {
         baseHP:           100,
         baseHitForce:     20,
         hitDelay:         1,
+    },
+
+    tribe: {
+        max: 4,
     },
 
     source: {

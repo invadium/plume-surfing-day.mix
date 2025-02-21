@@ -57,8 +57,8 @@ function belt() {
     pin.blinky = lab.port.spawn( dna.space.Creature, {
         tribe,
         alias: 'jeff',
-        x:    -150,
-        y:    350,
+        x:    -120,
+        y:    120,
     })
 }
 belt.Z = 21
