@@ -3,10 +3,19 @@ function mouseDown(e) {
     const last = lab.port.pick( mouse.x, mouse.y, ls )
 
     if (e.button === 0) {
+        // left click
+        
+        // check for a planet
         const planets = ls.filter(e => e instanceof dna.space.Planet)
-        if (planets.length === 0) return 
-        const planet = planets[0]
-        planet.shake()
+        if (planets.length > 0) {
+            // TODO start the tectonic charge instead
+            const planet = planets[0]
+            planet.shake()
+        }
+
+        const creatures = ls.filter(e => e instanceof dna.space.Creature)
+        creatures.forEach( creature => creature.wakeUp() )
+
 
     } else if (e.button === 1) {
         // middle click

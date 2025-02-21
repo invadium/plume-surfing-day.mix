@@ -8,9 +8,9 @@ class Creature extends Body {
         super( extend({
             type: 'creature',
             name: 'creature' + (++id),
-            team: 0,
-            r:    30,
-            dir:  0,    // points to where the creature is looking at
+            tribe: 0,
+            r:     30,
+            dir:   0,    // points to where the creature is looking at
         }, st) )
 
         this.install([
@@ -34,7 +34,16 @@ class Creature extends Body {
                 new dna.space.pod.SelectionIndicator(),
             ])
         }
-        this.color = env.style.color.team[this.team]
+        this.color = env.style.color.tribe[this.tribe]
+    }
+
+    wakeUp() {
+        // TODO change the goal/state (e.g. idle -> mining or mining -> warming)
+        log(`[${this.name}] is waking up!`)
+
+        if (this.surfaced) {
+            this.momentum.surfaceJump(env.tune.debug.mouse.jumpAcceleration)
+        }
     }
 
     evo(dt) {

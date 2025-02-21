@@ -27,23 +27,23 @@ function belt() {
     })
 
 
-    let team = 4
+    let tribe = 4
     pin.inky = lab.port.spawn( dna.space.Creature, {
-        team,
+        tribe,
         alias: 'inky',
         x:    -150,
         y:    -240,
     })
 
     pin.blinky = lab.port.spawn( dna.space.Creature, {
-        team,
+        tribe,
         alias: 'blinky',
         x:    -80,
         y:    -200,
     })
 
     pin.pinky = lab.port.spawn( dna.space.Creature, {
-        team,
+        tribe,
         alias: 'pinky',
         x:     20,
         y:    -180,

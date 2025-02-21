@@ -13,7 +13,7 @@ const style = {
 
         space: '#2a1c31',
 
-        team: [
+        tribe: [
             // neutral
             {
                 base: '#787878',
