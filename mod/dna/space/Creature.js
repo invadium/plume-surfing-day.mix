@@ -84,11 +84,12 @@ class Creature extends Body {
     damage(hits, source) {
         this.hp -= hits
         // TODO particle effect
-        if (this.momentum.surface) {
-            const surface = this.momentum.surface,
-                  lx = cos(this.polar[0]) * surface.r,
-                  ly = sin(this.polar[0]) * surface.r
-            lib.vfx.touchdown(surface, lx, ly, this.polar[0], this.color.high, 15)
+        const surface = this.momentum.surface
+        if (surface) {
+            const polar = this.polar,
+                  lx    = cos(polar[0]) * (polar[1] + 0.6 * this.r),
+                  ly    = sin(polar[0]) * (polar[1] + 0.6 * this.r)
+            lib.vfx.damage(surface, lx, ly, polar[0], this.color.high)
         }
         if (this.hp <= 0) kill(this, source)
     }
@@ -177,6 +178,14 @@ class Creature extends Body {
         if (!source) throw new Error('why am I here?')
         this.__.detach(this)
         log(`${this.getTitle()} is killed by ${source.getTitle()}`)
+
+        const surface = this.momentum.surface
+        if (surface) {
+            const polar = this.polar,
+                  lx    = cos(polar[0]) * (polar[1] - .7 * this.r),
+                  ly    = sin(polar[0]) * (polar[1] - .7 * this.r)
+            lib.vfx.zap(surface, lx, ly, polar[0], this.color.high)
+        }
     }
 
     getTitle() {

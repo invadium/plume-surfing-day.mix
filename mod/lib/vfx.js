@@ -21,6 +21,47 @@ function plume(target, x, y, tau, color, intensity) {
     })
 }
 
+function damage(target, x, y, tau, color) {
+    const s = ry(.001)
+    target.spawn(dna.Emitter, {
+        x: x,
+        y: y,
+        //dx: -70*s,
+        color: color,
+        lifespan: 0.1,
+        force: 1000,
+        radius: 5,
+        size: 2*s, vsize: 2*s,
+        speed: 50*s, vspeed: 10*s,
+        angle: 0, spread: PI2,
+        minLifespan: .2, vLifespan: 0.1,
+        drawParticle: function() {
+            fill(this.color)
+            rect(floor(this.x), floor(this.y), this.r, this.r)
+        }
+    })
+}
+
+function zap(target, x, y, tau, color) {
+    const s = ry(.001)
+    target.spawn(dna.Emitter, {
+        x: x,
+        y: y,
+        color: color,
+        lifespan: .5,
+        force: 5000,
+        radius: 15,
+        size: 2*s, vsize: 3*s,
+        speed: 50*s, vspeed: 80*s,
+        angle: tau - .1 * PI, spread: .2 * PI,
+        minLifespan: .1, vLifespan: 1.5,
+        drawParticle: function() {
+            fill(this.color)
+            rect(floor(this.x), floor(this.y), this.r, this.r)
+        }
+    })
+}
+
 function ouch(target, x, y, color) {
     const s = ry(.001)
     target.spawn(dna.Emitter, {
