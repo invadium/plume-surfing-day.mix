@@ -1,4 +1,6 @@
 function belt() {
+    lab.background = env.style.color.space
+
     lab.port.spawn( dna.space.Planet, {
         name: 'Odin',
         x:     -150,
@@ -25,19 +27,23 @@ function belt() {
     })
 
 
+    let team = 4
     pin.inky = lab.port.spawn( dna.space.Creature, {
+        team,
         alias: 'inky',
         x:    -150,
         y:    -240,
     })
 
     pin.blinky = lab.port.spawn( dna.space.Creature, {
+        team,
         alias: 'blinky',
         x:    -80,
         y:    -200,
     })
 
     pin.pinky = lab.port.spawn( dna.space.Creature, {
+        team,
         alias: 'pinky',
         x:     20,
         y:    -180,

@@ -25,15 +25,16 @@ class Creature extends Body {
 
         if (env.debug) {
             this.install([
-                new dna.space.pod.RadiusProbe(),
-                new dna.space.pod.CoordinatesProbe({
-                    x: -this.r,
-                    y: 1.5 * this.r,
-                }), 
+                //new dna.space.pod.RadiusProbe(),
+                //new dna.space.pod.CoordinatesProbe({
+                //    x: -this.r,
+                //    y: 1.5 * this.r,
+                //}), 
                 new dna.space.pod.MomentumProbe(),
                 new dna.space.pod.SelectionIndicator(),
             ])
         }
+        this.color = env.style.color.team[this.team]
     }
 
     evo(dt) {
@@ -55,24 +56,33 @@ class Creature extends Body {
         translate(this.x, this.y)
         rotate(this.dir)
 
-        lineWidth(1)
-        const c1 = hsl(.47, .27, .25),
-              c2 = hsl(.35, .42, .56)
-        fill(c1, c2)
-        rect( -rh, -r, r, R )
-        rect( 0, hb-hh, hw, hh)
+        // lineWidth(1)
+        fill(this.color.base)
 
-        fill('#ffffff')
+        // body
+        rect( -rh, -r, r, R )
+        // head
+        const hx = 0
+        rect( hx, hb-hh, hw, hh)
+
+        fill(env.style.color.eyes)
         rect(
-            0.3 * r, hb-hh-.25*hh,
+            hx + 0.3 * r, hb-hh-.25*hh,
             eh, ew
         )
         rect(
-            hw - 0.3 * r, hb-hh-.25*hh,
+            hx + hw - 0.3 * r, hb-hh-.25*hh,
             eh, ew
         )
 
         lineWidth(2)
+        stroke(this.color.high)
+
+        // hair
+        line(hx + 0.6 * hw, hb-hh,
+             hx + 0.6 * hw, hb-hh-.5*hh)
+
+        // legs
         line(-.3*r, r, -.4*r, r + .6*r)
         line( .3*r, r,  .2*r, r + .6*r)
 

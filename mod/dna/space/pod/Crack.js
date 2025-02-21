@@ -33,7 +33,7 @@ class Crack {
             }
         })
 
-        lib.vfx.plume(this.__, lx, ly, this.tau, '#ffffff80', intensity)
+        lib.vfx.plume(this.__, lx, ly, this.tau, env.style.color.plume, intensity)
     }
 
     draw() {
@@ -43,7 +43,8 @@ class Crack {
         lineWidth(2)
         //stroke( hsl(.1, .42, .56) )
         //fill( hsl(.05, .4, .5) )
-        fill( hsl(.05, .4, .5), hsl(.45, 42, .4) )
+        //fill( hsl(.05, .4, .5), hsl(.45, 42, .4) )
+        fill( env.style.color.crack.base, env.style.color.crack.low )
 
         moveTo(this.r1,  0)
         lineTo(this.r2, -10)

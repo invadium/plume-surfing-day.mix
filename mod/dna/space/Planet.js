@@ -7,6 +7,7 @@ class Planet extends Body {
     constructor(st) {
         super( extend({
             name:  'planet' + (++id),
+            type:   0,
                G:   1 * env.tune.G,
                r:   100,
               kR:   400,
@@ -30,14 +31,16 @@ class Planet extends Body {
 
         if (env.debug) {
             this.install([
-                new dna.space.pod.RadiusProbe(),
-                new dna.space.pod.CoordinatesProbe({
-                    x: -this.r,
-                    y: 1.5 * this.r,
-                }), 
+                // new dna.space.pod.RadiusProbe(),
+                //new dna.space.pod.CoordinatesProbe({
+                //    x: -this.r,
+                //    y: 1.5 * this.r,
+                //}), 
                 new dna.space.pod.SelectionIndicator(),
             ])
         }
+
+        this.color = env.style.color.planet[this.type]
     }
 
     worldToPolar(wx, wy) {
@@ -72,14 +75,14 @@ class Planet extends Body {
 
         // polar axis
         lineWidth(3)
-        stroke( hsl(.35, .42, .56) )
+        stroke( this.color.high )
         line(0, -this.r * 1.1, 0, this.r * 1.1)
 
-        fill( hsl(.47, .27, .25) )
+        fill( this.color.base )
         circle( 0, 0, this.r )
 
         lineWidth(3)
-        stroke( hsl(.35, .42, .56) )
+        stroke( this.color.high )
         circle( 0, 0, this.r )
 
         super.draw()
