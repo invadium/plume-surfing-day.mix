@@ -11,7 +11,8 @@ class PlanetOwnerMonitor {
     }
 
     assignOwner(tribe) {
-        const prevTribe = this.__.tribe
+        const __ = this.__
+        const prevTribe = __.tribe
         // TODO defer for a capture period
         if (tribe !== prevTribe) {
             if (this.preOwner !== tribe) {
@@ -20,8 +21,11 @@ class PlanetOwnerMonitor {
                 this.preCaptureTime = env.time
             } else {
                 if (this.preCaptureTime + env.tune.planet.captureTime < env.time) {
-                    this.__.tribe = tribe
-                    this.__.onCapture(tribe, prevTribe)
+                    lib.vfx.capture(lab.port, __.x, __.y, env.style.color.tribe[tribe].high)
+                    defer(() => {
+                        __.tribe = tribe
+                        __.onCapture(tribe, prevTribe)
+                    }, .4)
                 }
             }
         }
