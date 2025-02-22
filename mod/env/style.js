@@ -63,6 +63,11 @@ const style = {
             impact: '#a6a6a6',
         },
 
+        mineralDeposit: {
+            base:   '#ebac4d',
+            pickUp: '#ebac4d'
+        },
+
         crack: {
             base: '#9f3847',
             high: '#c74446',

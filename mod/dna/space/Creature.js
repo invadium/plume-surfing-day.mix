@@ -109,6 +109,14 @@ class Creature extends Body {
         }
     }
 
+    pickUp(deposit) {
+        if (!(deposit instanceof dna.space.MineralDeposit)) return
+
+        log(this.getTitle() + ' picked up gold!')
+        lib.vfx.pickUp(lab.port, deposit.x, deposit.y, env.style.color.mineralDeposit.pickUp)
+        kill(deposit)
+    }
+
     evo(dt) {
         super.evo(dt)
     }
@@ -199,7 +207,6 @@ class Creature extends Body {
     }
 
     kill(source) {
-        if (!source) throw new Error('why am I here?')
         this.__.detach(this)
         log(`${this.getTitle()} is killed by ${source.getTitle()}`)
 

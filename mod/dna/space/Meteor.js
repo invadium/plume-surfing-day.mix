@@ -22,20 +22,21 @@ class Meteor extends Body {
             }),
         ])
 
-        if (env.debug) {
-            this.install([
-                // new dna.space.pod.RadiusProbe(),
-                //new dna.space.pod.CoordinatesProbe({
-                //    x: -this.r,
-                //    y: 1.5 * this.r,
-                //}), 
-                //new dna.space.pod.MomentumProbe(),
-                new dna.space.pod.SelectionIndicator(),
-            ])
-        }
+        if (env.debug) this.install([
+            // new dna.space.pod.RadiusProbe(),
+            //new dna.space.pod.CoordinatesProbe({
+            //    x: -this.r,
+            //    y: 1.5 * this.r,
+            //}), 
+            //new dna.space.pod.MomentumProbe(),
+            new dna.space.pod.SelectionIndicator(),
+        ])
     }
 
     hit(source) {
+        if (source instanceof dna.space.Creature) {
+            source.kill(this)
+        }
         if (!(source instanceof dna.space.Planet)) return
 
         const sV = this.momentum.speedV
@@ -52,10 +53,15 @@ class Meteor extends Body {
         //sV[0] = rV[0]
         //sV[1] = rV[1]
 
-        kill(this)
+        kill(this, source)
         const ix = source.x + nV[0] * source.r
         const iy = source.y + nV[1] * source.r
         lib.vfx.impact(lab.port, ix, iy, impactAngle, env.style.color.meteor.impact, 200)
+
+        lab.port.spawn( dna.space.MineralDeposit, {
+            x: ix,
+            y: iy,
+        })
     }
 
     draw() {

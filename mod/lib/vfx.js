@@ -159,6 +159,27 @@ function warpFX(target, x, y, color) {
     })
 }
 
+function pickUp(target, x, y, color) {
+    const s = ry(.001)
+    target.spawn(dna.Emitter, {
+        x: x,
+        y: y,
+        color: color,
+        lifespan: 0.05,
+        force: 2000,
+        radius: 0,
+        size: 2*s, vsize: 2*s,
+        speed: 100*s, vspeed: 20*s,
+        angle: 0, spread: PI2,
+        minLifespan: .2, vLifespan: 0.8,
+        drawParticle: function() {
+            fill(this.color)
+            rect(floor(this.x), floor(this.y), this.r, this.r)
+        }
+    })
+}
+
+
 function ouch(target, x, y, color) {
     const s = ry(.001)
     target.spawn(dna.Emitter, {

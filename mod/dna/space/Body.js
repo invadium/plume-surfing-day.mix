@@ -177,4 +177,8 @@ class Body extends LabFrame {
             }
         }
     }
+
+    getTitle() {
+        return this.name || 'unknown-body'
+    }
 }

@@ -85,5 +85,11 @@ function belt() {
         y: 0,
         r: 10,
     })
+
+    lab.port.spawn( dna.space.MineralDeposit, {
+        x: 100,
+        y: 50,
+        r: 10,
+    })
 }
 belt.Z = 21
