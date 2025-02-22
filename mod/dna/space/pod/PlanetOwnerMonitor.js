@@ -21,11 +21,15 @@ class PlanetOwnerMonitor {
                 this.preCaptureTime = env.time
             } else {
                 if (this.preCaptureTime + env.tune.planet.captureTime < env.time) {
-                    lib.vfx.capture(lab.port, __.x, __.y, env.style.color.tribe[tribe].high)
+                    const emitter = lib.vfx.capture(lab.port, __.x, __.y, env.style.color.tribe[tribe].high)
+                    const delay = __.r / emitter.speed
+                    log('R: ' + __.r)
+                    log('speed: ' + emitter.speed)
+                    log('delay: ' + delay)
                     defer(() => {
                         __.tribe = tribe
                         __.onCapture(tribe, prevTribe)
-                    }, .4)
+                    }, delay)
                 }
             }
         }

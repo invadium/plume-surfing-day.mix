@@ -5,3 +5,7 @@ function angleInRange(angle, lower, upper) {
         return angle >= lower && angle <= upper
     }
 }
+
+function balancedAngle(theta) {
+    return theta - TAU * Math.floor((theta + PI) / TAU)
+}

@@ -29,7 +29,7 @@ class Creature extends Body {
             new dna.space.pod.SolidCircle({
                 r: 20,
             }),
-            new dna.space.pod.RandomWalkerBot(),
+            new dna.space.pod.SmartBot(),
         ])
 
         if (env.debug) {

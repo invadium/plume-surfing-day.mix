@@ -52,7 +52,7 @@ class Momentum {
     }
 
     boundToPlanet(bound) {
-        if (this.surface) return this.bound
+        if (this.surface) return this.surface // surfaced, so binded to the previous one
 
         if ((!this.bound || this.bound !== bound) && isFun(this.__.onBound)) {
             this.__.onBound(bound)
@@ -63,6 +63,7 @@ class Momentum {
     }
 
     releaseFromPlanet() {
+        if (this.surface) return // wait until detached from the surface
         if (this.bound && isFun(this.__.onRelease)) {
             this.__.onRelease(this.bound)
         }

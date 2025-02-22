@@ -100,7 +100,7 @@ function touchdown(target, x, y, tau, color, intensity) {
 
 function capture(target, x, y, color) {
     const s = ry(.001)
-    target.spawn(dna.Emitter, {
+    return target.spawn(dna.Emitter, {
         x: x,
         y: y,
         color: color,
@@ -108,9 +108,9 @@ function capture(target, x, y, color) {
         force: 20000,
         radius: 0,
         size: 2*s, vsize: 4*s,
-        speed: 200*s, vspeed: 0,
+        speed: 120*s, vspeed: 0,
         angle: 0, spread: PI2,
-        minLifespan: 2, vLifespan: 0.5,
+        minLifespan: 3, vLifespan: 1,
         drawParticle: function() {
             fill(this.color)
             rect(floor(this.x), floor(this.y), this.r, this.r)

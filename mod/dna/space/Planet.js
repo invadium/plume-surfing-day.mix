@@ -97,4 +97,16 @@ class Planet extends Body {
     onCapture(tribe, prevTribe) {
         log(`${this.name} is captured by @${tribe}`)
     }
+
+    isWithinCrack(tau) {
+        tau = lib.util.balancedAngle(tau)
+        let within = false
+        this._ls.forEach(e => {
+            if (e instanceof dna.space.pod.Crack
+                    && abs(e.tau - tau) <= env.tune.plume.effectArea) {
+                within = true
+            }
+        })
+        return within
+    }
 }
