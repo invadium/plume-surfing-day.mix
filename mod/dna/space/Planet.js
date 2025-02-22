@@ -6,14 +6,15 @@ class Planet extends Body {
 
     constructor(st) {
         super( extend({
-            name:  'planet' + (++id),
-            type:   0,
-           tribe:   0,
-               G:   1 * env.tune.G,
-               r:   100,
-              kR:   400,
-              gR:   500,
-              aG:   0.25 * PI,
+             name: 'planet' + (++id),
+             type:  0,
+            tribe:  0,
+                G:  1 * env.tune.G,
+                r:  100,
+               kR:  400,
+               gR:  500,
+               aG:  0.25 * PI,
+           energy:  0,
         }, st) )
 
         this.install([
@@ -43,6 +44,8 @@ class Planet extends Body {
         }
 
         this.color = env.style.color.planet[this.type]
+        this.seismicCapacity = env.tune.planet.seismicCapacityFactor * this.r
+        this.seismicCharge   = env.tune.planet.baseSeismicCharge
     }
 
     worldToPolar(wx, wy) {
@@ -64,10 +67,28 @@ class Planet extends Body {
         const cracks = this._ls.filter(e => e instanceof dna.space.pod.Crack)
         // TODO calculate tectonic energy and split over all active plumes
         cracks.forEach(crack => crack.plume(100))
+        this.energy = 0
     }
 
     // TODO vent out excessive tectonic energy
     vent() {
+        const ventRate = lib.source.events.rndf()
+        const releasedEnergy = this.energy * ventRate
+        this.energy = this.energy - releasedEnergy
+
+        const cracks = this._ls.filter(e => e instanceof dna.space.pod.Crack)
+        const crackEnergy = releasedEnergy / cracks.length
+        cracks.forEach(crack => crack.plume(crackEnergy))
+    }
+
+    evo(dt) {
+        super.evo(dt)
+
+        this.energy += this.seismicCharge * dt
+        if (this.energy > this.seismicCapacity) {
+            this.energy = this.seismicCapacity
+            this.vent()
+        }
     }
 
     draw() {
@@ -108,5 +129,9 @@ class Planet extends Body {
             }
         })
         return within
+    }
+
+    getCharge() {
+        return this.energy / this.seismicCapacity
     }
 }

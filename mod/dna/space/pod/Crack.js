@@ -21,6 +21,7 @@ class Crack {
         const ly = sin(this.tau) * this.r2
 
 
+        log(`[${planet.name}] force: ${force}`)
         const lower  = math.normalizeAngle(this.tau - env.tune.plume.effectArea)
         const higher = math.normalizeAngle(this.tau + env.tune.plume.effectArea)
         lab.port._ls.forEach(e => {
@@ -28,29 +29,46 @@ class Crack {
                 const tau = math.normalizeAngle(e.polar[0])
                 if (lib.util.angleInRange(tau, lower, higher)) {
                     // TODO calculate the jump acceleration based on the erruption force
-                    e.momentum.surfaceJump(150)
+                    e.momentum.surfaceJump(force)
                 }
             }
         })
 
-        lib.vfx.plume(this.__, lx, ly, this.tau, env.style.color.plume, intensity)
+        lib.vfx.plume(this.__, lx, ly, this.tau, env.style.color.plume, force)
+    }
+
+    drawShape(sh) {
+        moveTo(this.r1,  0)
+        lineTo(this.r2, -sh)
+        lineTo(this.r2,  sh)
+        closePath()
+        shape()
     }
 
     draw() {
+        const sh = 10
+        const charge = this.__.getCharge()
+        const r1  = this.r1
+        const r15 = this.r1 + (this.r2 - this.r1) * charge
+        const s15 = ((r15 - r1) / (this.r2 - r1)) * sh
+
         save()
         rotate(this.tau)
 
-        lineWidth(2)
-        //stroke( hsl(.1, .42, .56) )
-        //fill( hsl(.05, .4, .5) )
-        //fill( hsl(.05, .4, .5), hsl(.45, 42, .4) )
-        fill( env.style.color.crack.base, env.style.color.crack.low )
+        fill(env.style.color.crack.base)
+        this.drawShape(sh)
 
-        moveTo(this.r1,  0)
-        lineTo(this.r2, -10)
-        lineTo(this.r2,  10)
+        //fill(env.style.color.crack.high)
+        fill('#ff0000')
+        moveTo(this.r1,   0)
+        lineTo(r15,     -s15)
+        lineTo(r15,      s15)
         closePath()
         shape()
+
+        lineWidth(2)
+        stroke(env.style.color.crack.low)
+        this.drawShape(sh)
 
         restore()
     }

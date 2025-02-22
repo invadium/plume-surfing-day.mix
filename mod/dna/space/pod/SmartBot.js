@@ -78,11 +78,11 @@ class SmartBot {
                       radialSpeed     = horizontalSpeed / radLength,
                       angleToStop = .5 * radialSpeed * timeToStop
 
-                this.status = angleToStop
+                //this.status = angleToStop
 
                 if (__.surfaced && surface.isWithinCrack(__.polar[0] + angleToStop)) {
                     // break, idle and recharge
-                    this.status += ' breaking!'
+                    //this.status += ' breaking!'
                 } else {
                     __.momentum.surfaceRun(dt)
                 }

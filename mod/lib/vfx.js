@@ -8,7 +8,7 @@ function plume(target, x, y, tau, color, intensity) {
         //dx: -70*s,
         color: color,
         lifespan: 0.5,
-        force: 750 * intensity,
+        force: 75 * intensity,
         radius: 5,
         size: 1*s, vsize: 2*s,
         speed: 40*s, vspeed: 200*s,

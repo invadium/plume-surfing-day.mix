@@ -56,8 +56,9 @@ const style = {
         ],
 
         crack: {
-            base: '#c74446',
-            low:  '#71282a',
+            base: '#9f3847',
+            high: '#c74446',
+            low:  '#4d2235',
         },
 
         plume: '#cfccca',

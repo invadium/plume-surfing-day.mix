@@ -11,6 +11,8 @@ const tune = {
 
     planet: {
         captureTime: 10,
+        seismicCapacityFactor: 2, // multiplied with a planet radius to get the capacity
+        baseSeismicCharge:     4,
     },
 
     plume: {

@@ -23,9 +23,6 @@ class PlanetOwnerMonitor {
                 if (this.preCaptureTime + env.tune.planet.captureTime < env.time) {
                     const emitter = lib.vfx.capture(lab.port, __.x, __.y, env.style.color.tribe[tribe].high)
                     const delay = __.r / emitter.speed
-                    log('R: ' + __.r)
-                    log('speed: ' + emitter.speed)
-                    log('delay: ' + delay)
                     defer(() => {
                         __.tribe = tribe
                         __.onCapture(tribe, prevTribe)
@@ -70,7 +67,7 @@ class PlanetOwnerMonitor {
 
     evo(dt) {
         const timer = env.time - this.lastCheck
-        if (timer > 1) {
+        if (timer > 2) {
             this.checkOwnership()
             this.lastCheck = env.time
         }
