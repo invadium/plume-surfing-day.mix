@@ -1,6 +1,6 @@
-function tug(planet, __, d, dt) {
+function creatureTug(planet, __, d, dt) {
     if (!planet || d > planet.gR) {
-        __.momentum.releaseFromPlanet()
+        __.momentum.releaseFromPlanet() // no planet in the range for gravitational tug
         return
     }
     const boundedPlanet = __.momentum.boundToPlanet(planet)
@@ -17,14 +17,27 @@ function tug(planet, __, d, dt) {
     __.momentum.angularTarget(tau)
 }
 
+function spaceBodyTug(planet, __, d, dt) {
+    if (!planet || d > planet.gR) return
+
+    const phi = bearing( __.x, __.y, planet.x, planet.y )
+    __.momentum.gravityUnit = [ cos(phi), sin(phi) ]
+    // pull down to the surface
+    __.momentum.push(__.momentum.gravityUnit, planet.G, dt)
+}
+
 class GravityEffect {
 
     constructor(st) {
-
         extend(this, {
             type: 'physics',
             name: 'gravityEffect',
+            boundable: false,
         }, st)
+    }
+
+    onInstall() {
+        if (!this.__.momentum) throw new Error('[${this.name}] a momentum pod is required for gravity to work!')
     }
 
     evo(dt) {
@@ -43,7 +56,8 @@ class GravityEffect {
             }
         })
 
-        tug(planet, __, closestDist, dt)
+        if (this.boundable) creatureTug(planet, __, closestDist, dt)
+        else spaceBodyTug(planet, __, closestDist, dt)
     }
 
 }

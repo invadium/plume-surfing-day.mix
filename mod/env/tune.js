@@ -50,7 +50,7 @@ const tune = {
 
     debug: {
         mouse: {
-            pushForce:    2400,
+            pushForce:    4000, 
             restDeltaV:  -50,
             moveForce:    2000,
             jetForce:     5000,

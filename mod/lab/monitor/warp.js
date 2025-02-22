@@ -11,7 +11,7 @@ let lastProbe = 0
 
 function warpSpace() {
     lab.port._ls.forEach(e => {
-        if (e instanceof dna.space.Creature
+        if (e.warpSpace
                 && !e.bounded
                 && dist(0, 0, e.x, e.y) > env.beltRadius) {
             e.warpSpace()

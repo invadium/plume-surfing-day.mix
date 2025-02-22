@@ -1,5 +1,5 @@
 function evo(dt) {
-    if (!env.selected || !(env.selected instanceof dna.space.Creature)) return
+    if (!env.selected) return
 
     const target = env.selected
 
@@ -17,6 +17,8 @@ function evo(dt) {
     }
 
     if (mouse.buttons & 4) {
+        if (!(target instanceof dna.space.Creature)) return
+
         if (target.surfaced) {
             // jump
             target.momentum.surfaceJumpAction(env.tune.debug.mouse.jumpAcceleration)
@@ -26,12 +28,14 @@ function evo(dt) {
     }
 
     if (mouse.buttons & 8) {
+        if (!(target instanceof dna.space.Creature)) return
         if (target.surfaced) {
             target.momentum.surfacePush(-env.tune.debug.mouse.moveForce, dt)
         }
     }
 
     if (mouse.buttons & 16) {
+        if (!(target instanceof dna.space.Creature)) return
         if (target.surfaced) {
             // jump
             target.momentum.surfaceJet(env.tune.debug.mouse.jetForce, dt)

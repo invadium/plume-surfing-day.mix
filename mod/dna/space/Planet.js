@@ -101,10 +101,12 @@ class Planet extends Body {
         translate( this.x, this.y )
         rotate(this.dir)
 
+        /*
         // polar axis
         lineWidth(3)
         stroke( this.color.high )
         line(0, -this.r * 1.1, 0, this.r * 1.1)
+        */
 
         fill( this.color.base )
         circle( 0, 0, this.r )

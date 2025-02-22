@@ -58,6 +58,10 @@ const style = {
             }
         ],
 
+        meteor: {
+            base: '#cfccca',
+        },
+
         crack: {
             base: '#9f3847',
             high: '#c74446',
