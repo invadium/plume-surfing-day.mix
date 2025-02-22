@@ -19,9 +19,9 @@ function evo(dt) {
     if (mouse.buttons & 4) {
         if (target.surfaced) {
             // jump
-            target.momentum.surfaceJump(env.tune.debug.mouse.jumpAcceleration)
+            target.momentum.surfaceJumpAction(env.tune.debug.mouse.jumpAcceleration)
         } else {
-            target.momentum.deltaV(env.tune.debug.mouse.restDeltaV * dt)
+            target.momentum.surfaceDeltaV(env.tune.debug.mouse.restDeltaV * dt)
         }
     }
 

@@ -17,7 +17,7 @@ class Momentum {
         this.speedV[1] += dirV2[1] * acceleration * dt
     }
 
-    deltaV(deltaSpeed) {
+    surfaceDeltaV(deltaSpeed) {
         const sV     = this.speedV,
               speed  = len(sV[0], sV[1]),
               phi    = atan2(sV[1], sV[0])
@@ -46,9 +46,14 @@ class Momentum {
         }
     }
 
-    surfaceJump(acceleration) {
+    surfaceJumpAction(acceleration) {
         if (!this.isTouchingSurface()) return
         this.speedV[1] += acceleration
+    }
+
+    surfacePropelAction(acceleration) {
+        if (!this.isTouchingSurface()) return
+        this.speedV[0] += acceleration
     }
 
     boundToPlanet(bound) {
@@ -150,8 +155,9 @@ class Momentum {
                 // detach from the surface!
                 // restore freespace speed vector
                 const phi = bearing( __.x, __.y, surface.x, surface.y ) + PI
-                sV[0] = cos(phi) * verticalSpeed
-                sV[1] = sin(phi) * verticalSpeed
+                const tau = phi + HALF_PI
+                sV[0] = cos(phi) * verticalSpeed + cos(tau) * horizontalSpeed
+                sV[1] = sin(phi) * verticalSpeed + sin(tau) * horizontalSpeed
 
                 __.surfaced = false
                 __.touchingSurface = false

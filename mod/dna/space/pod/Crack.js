@@ -42,7 +42,7 @@ class Crack {
             if (!e.dead && e instanceof dna.space.Creature && e.momentum.surface === planet) {
                 const tau = math.normalizeAngle(e.polar[0])
                 if (lib.util.angleInRange(tau, lower, higher)) {
-                    e.momentum.surfaceJump(releasedEnergy)
+                    e.momentum.surfaceJumpAction(releasedEnergy)
                 }
             }
         })

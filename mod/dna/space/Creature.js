@@ -51,11 +51,11 @@ class Creature extends Body {
     }
 
     wakeUp() {
-        // TODO change the goal/state (e.g. idle -> mining or mining -> warming)
-        log(`[${this.getTitle()}] is waking up!`)
-
         if (this.surfaced) {
-            this.momentum.surfaceJump(env.tune.debug.mouse.jumpAcceleration)
+            log(`[${this.getTitle()}] is waking up!`)
+            this.momentum.surfaceJumpAction(env.tune.creature.wakeUpJump)
+            this.momentum.surfacePropelAction(env.tune.creature.wakeAcceleration)
+            if (this.bot.switchAttitude) this.bot.switchAttitude()
         }
     }
 

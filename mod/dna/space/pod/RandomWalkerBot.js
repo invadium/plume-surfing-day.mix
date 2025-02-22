@@ -28,7 +28,7 @@ class RandomWalkerBot {
                 break
             case JUMPING:
                 this.actionTime = time || 5
-                this.__.momentum.surfaceJump(this.__.surfaceJumpAcceleration)
+                this.__.momentum.surfaceJumpAction(this.__.surfaceJumpAcceleration)
                 break
         }
     }

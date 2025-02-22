@@ -31,6 +31,8 @@ const tune = {
         baseHP:           100,
         baseHitForce:     20,
         hitDelay:         1,
+        wakeUpJump:       25,
+        wakeAcceleration: 15,
     },
 
     tribe: {

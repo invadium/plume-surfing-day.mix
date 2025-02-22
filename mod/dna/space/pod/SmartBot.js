@@ -37,7 +37,7 @@ class SmartBot {
                 break
             case JUMPING:
                 this.actionTime = time || 5
-                this.__.momentum.surfaceJump(this.__.surfaceJumpAcceleration)
+                this.__.momentum.surfaceJumpAction(this.__.surfaceJumpAcceleration)
                 break
             case SURFING:
                 this.actionTime = time || 60
@@ -59,11 +59,6 @@ class SmartBot {
         this.setupNextAction(nextAction)
     }
 
-    selectNextMigratingAction() {
-        const nextAction = SURFING
-        this.setupNextAction(nextAction)
-    }
-
     // select next action considering the attitude
     selectNextAction() {
         switch(this.attitude) {
@@ -74,7 +69,7 @@ class SmartBot {
                 this.selectNextWanderingAction()
                 break
             case MIGRATING:
-                this.selectNextMigratingAction()
+                this.setupNextAction(SURFING)
                 break
         }
     }
@@ -82,6 +77,14 @@ class SmartBot {
     setAttitude(attitude) {
         this.attitude = attitude
         this.selectNextAction()
+    }
+
+    switchAttitude() {
+        if (this.attitude === MIGRATING) {
+            this.setAttitude(WANDERING)
+        } else {
+            this.setAttitude(MIGRATING)
+        }
     }
 
     evo(dt) {
