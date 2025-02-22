@@ -53,7 +53,9 @@ class Meteor extends Body {
         //sV[1] = rV[1]
 
         kill(this)
-        lib.vfx.impact(lab.port, this.x, this.y, impactAngle, env.style.color.plume, 200)
+        const ix = source.x + nV[0] * source.r
+        const iy = source.y + nV[1] * source.r
+        lib.vfx.impact(lab.port, ix, iy, impactAngle, env.style.color.plume, 200)
     }
 
     draw() {
