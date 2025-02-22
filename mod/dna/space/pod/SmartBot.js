@@ -1,7 +1,13 @@
-const IDLE = 0
-const RUNNING = 1
-const JUMPING = 2
-const SURFING = 3
+// actions
+const IDLE    = 0,
+      RUNNING = 1,
+      JUMPING = 2,
+      SURFING = 3
+
+// attitudes
+const FREE      = 0,
+      WANDERING = 1,
+      MIGRATING = 2
 
 class SmartBot {
 
@@ -11,34 +17,39 @@ class SmartBot {
             name:  'smartBot',
             alias: 'bot',
 
-            state: IDLE,
+            action:       IDLE,
+            attitude:     FREE,
             actionTime:   0,
             lastDecision: 0,
         }, st)
     }
 
-    setupNextAction(nextAction) {
+    setupNextAction(nextAction, time) {
         //log(`[${this.__.getTitle()}] next action: ${this.actionName(nextAction)}`)
-        this.state = nextAction
+        this.action = nextAction
         this.lastDecision = env.time
         switch(nextAction) {
             case IDLE:
-                this.actionTime = 3 + lib.source.bot.rnd(7)
+                this.actionTime = time || (3 + lib.source.bot.rnd(7))
                 break
             case RUNNING:
-                this.actionTIme = 5 + lib.source.bot.rnd(10)
+                this.actionTime = time || (5 + lib.source.bot.rnd(10))
                 break
             case JUMPING:
-                this.actionTime = 5
+                this.actionTime = time || 5
                 this.__.momentum.surfaceJump(this.__.surfaceJumpAcceleration)
                 break
             case SURFING:
-                this.actionTime = 60
+                this.actionTime = time || 60
                 break
         }
     }
 
-    selectNextAction() {
+    selectIdle() {
+        this.setupNextAction(IDLE)
+    }
+
+    selectNextFreeAction() {
         const nextAction = lib.source.bot.rndi(SURFING + 1)
         this.setupNextAction(nextAction)
     }
@@ -48,9 +59,29 @@ class SmartBot {
         this.setupNextAction(nextAction)
     }
 
-    selectNextSurfingAction() {
+    selectNextMigratingAction() {
         const nextAction = SURFING
         this.setupNextAction(nextAction)
+    }
+
+    // select next action considering the attitude
+    selectNextAction() {
+        switch(this.attitude) {
+            case FREE:
+                this.selectNextFreeAction()
+                break
+            case WANDERING:
+                this.selectNextWanderingAction()
+                break
+            case MIGRATING:
+                this.selectNextMigratingAction()
+                break
+        }
+    }
+
+    setAttitude(attitude) {
+        this.attitude = attitude
+        this.selectNextAction()
     }
 
     evo(dt) {
@@ -58,7 +89,7 @@ class SmartBot {
         if (!__.surfaced) return // bot works only while the creature is on the surface of a planet
         const timer = env.time - this.lastDecision
 
-        switch(this.state) {
+        switch(this.action) {
             case IDLE:
                 if (timer > this.actionTime) this.selectNextAction()
                 break
@@ -91,6 +122,16 @@ class SmartBot {
         }
     }
 
+    onLaunch() {
+        this.setAttitude(FREE)
+        this.selectIdle()
+    }
+
+    onTouchdown() {
+        this.setAttitude(FREE)
+        this.selectIdle()
+    }
+
     actionName(action) {
         switch(action) {
             case IDLE:    return 'idle';
@@ -101,8 +142,24 @@ class SmartBot {
         }
     }
 
-    getState() {
-        return (this.actionName(this.state)
+    attitudeName(attitude) {
+        switch(attitude) {
+            case FREE:      return 'free';
+            case WANDERING: return 'wandering';
+            case MIGRATING: return 'migrating';
+        }
+    }
+
+    getAction() {
+        return (this.actionName(this.action)
             + (this.status? '/' + this.status : ''))
+    }
+
+    getAttitude() {
+        return this.attitudeName(this.attitude)
+    }
+
+    getState() {
+        return this.getAttitude() + '/' + this.getAction()
     }
 }

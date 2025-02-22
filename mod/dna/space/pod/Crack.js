@@ -17,7 +17,12 @@ class Crack {
     onInstall() {
         this.r2 = this.__.r
         this.r1 = this.r2 - this.depth
-        this.seismicCapacity = env.tune.planet.seismicCapacityFactor * this.depth
+        this.seismicCapacity = round(env.tune.planet.seismicCapacityFactor * this.depth)
+        this.seismicChargeRate = env.tune.planet.baseSeismicChargeRate
+            + env.tune.planet.varSeismicChargeRate * lib.source.cosmology.rndf()
+
+        this.lid = this.__._ls.filter(e => e instanceof dna.space.pod.Crack).length
+        this.alias = 'crack' + this.lid
     }
 
     plume(releasedEnergy) {
@@ -29,7 +34,8 @@ class Crack {
         if (releasedEnergy > this.energy) releasedEnergy = this.energy
         this.energy -= releasedEnergy
 
-        log(`[${planet.name}] released energy: ${releasedEnergy}`)
+        log(`[${planet.name}/${this.alias}] released energy: ${round(releasedEnergy)}`)
+        //log(`seismic capacity: ${this.seismicCapacity}, depth: ${this.depth}`)
         const lower  = math.normalizeAngle(this.tau - env.tune.plume.effectArea)
         const higher = math.normalizeAngle(this.tau + env.tune.plume.effectArea)
         lab.port._ls.forEach(e => {
@@ -54,8 +60,8 @@ class Crack {
         //cracks.forEach(crack => crack.plume(crackEnergy))
     }
 
-    shake() {
-        this.plume(this.energy)
+    shake(charge) {
+        this.plume(this.energy * charge)
     }
 
     drawShape(sh) {
@@ -67,7 +73,7 @@ class Crack {
     }
 
     evo(dt) {
-        this.energy += this.__.seismicCharge * dt
+        this.energy += this.seismicChargeRate * dt
         if (this.energy > this.seismicCapacity) {
             this.energy = this.seismicCapacity
             if (lib.source.events.rndf() < env.tune.plume.ventProbability * dt) {
@@ -78,7 +84,7 @@ class Crack {
 
     draw() {
         const sh = 10
-        const charge = this.getCharge()
+        const charge = this.getSeismicCharge()
         const r1  = this.r1
         const r15 = this.r1 + (this.r2 - this.r1) * charge
         const s15 = ((r15 - r1) / (this.r2 - r1)) * sh
@@ -104,7 +110,7 @@ class Crack {
         restore()
     }
 
-    getCharge() {
+    getSeismicCharge() {
         return this.energy / this.seismicCapacity
     }
 }

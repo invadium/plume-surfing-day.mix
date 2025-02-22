@@ -156,7 +156,7 @@ class Momentum {
                 __.surfaced = false
                 __.touchingSurface = false
                 this.surface = null
-                if (isFun(__.onLaunched)) __.onLaunched(surface)
+                if (isFun(__.onLaunch)) __.onLaunch(surface)
 
             } else {
                 // apply gravity
@@ -192,6 +192,7 @@ class Momentum {
                 }
 
                 if (surfaceContact && this.gravityUnit) {
+                    const prevSurface = this.surface
                     __.surfaced = true
                     this.surface = bound
                     const gU = this.gravityUnit
@@ -210,8 +211,8 @@ class Momentum {
                     lib.vfx.touchdown(bound, lx, ly, __.polar[0], '#c0c0c0a0', 10 + abs(landingSpeed/5))
                     //log(`landing speed: ${10 + abs(landingSpeed)/5}`)
 
-                    if (!this.surface && isFun(__.onLanded)) {
-                        __.onLanded(bound)
+                    if (this.surface !== prevSurface && isFun(__.onTouchdown)) {
+                        __.onTouchdown(bound)
                     }
                 }
             }
@@ -220,7 +221,15 @@ class Momentum {
         }
     }
 
+    onRelease() {
+        this.rotSpeed = .2 * lib.source.events.rnda()
+        // make sure we got a minimum rotation
+        if (this.rotSpeed < 0) this.rotSpeed -= .3
+        else this.rotSpeed += .3
+    }
+
     isTouchingSurface() {
+        if (!this.surface) return false
         return (this.__.polar[1] === this.surface.r + this.__.r)
     }
 

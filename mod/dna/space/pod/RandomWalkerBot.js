@@ -1,6 +1,6 @@
-const IDLE = 0
-const WALKING = 1
-const JUMPING = 2
+const IDLE = 0,
+      WALKING = 1,
+      JUMPING = 2
 
 class RandomWalkerBot {
 
@@ -10,37 +10,44 @@ class RandomWalkerBot {
             name:  'randomWalkerBot',
             alias: 'bot',
 
-            state: IDLE,
+            action: IDLE,
             actionTime:   0,
             lastDecision: 0,
         }, st)
     }
 
-    selectNextAction() {
-        const nextAction = lib.source.bot.rndi(JUMPING + 1)
-        //log(`[${this.__.getTitle()}] next action: ${this.actionName(nextAction)}`)
-
-        this.state = nextAction
+    setupNextAction(nextAction, time) {
+        this.action = nextAction
         this.lastDecision = env.time
         switch(nextAction) {
             case IDLE:
-                this.actionTime = 3 + lib.source.bot.rnd(7)
+                this.actionTime = time || (3 + lib.source.bot.rnd(7))
                 break
             case WALKING:
-                this.actionTIme = 5 + lib.source.bot.rnd(10)
+                this.actionTIme = time || (5 + lib.source.bot.rnd(10))
                 break
             case JUMPING:
-                this.actionTime = 5
+                this.actionTime = time || 5
                 this.__.momentum.surfaceJump(this.__.surfaceJumpAcceleration)
                 break
         }
+    }
+
+    selectIdle() {
+        this.setupNextAction(IDLE)
+    }
+
+    selectNextAction() {
+        const nextAction = lib.source.bot.rndi(JUMPING + 1)
+        //log(`[${this.__.getTitle()}] next action: ${this.actionName(nextAction)}`)
+        this.setupNextAction(nextAction)
     }
 
     evo(dt) {
         if (!this.__.surfaced) return // bot works only while the creature is on the surface of a planet
         const timer = env.time - this.lastDecision
 
-        switch(this.state) {
+        switch(this.action) {
             case IDLE:
                 if (timer > this.actionTime) this.selectNextAction()
                 break
@@ -54,6 +61,10 @@ class RandomWalkerBot {
         }
     }
 
+    onTouchdown() {
+        this.selectIdle()
+    }
+
     actionName(action) {
         switch(action) {
             case IDLE:    return 'idle';
@@ -63,8 +74,12 @@ class RandomWalkerBot {
         }
     }
 
+    getAction() {
+        return this.actionName(this.action)
+    }
+
     getState() {
-        return this.actionName(this.state)
+        return getAction()
     }
 
 }

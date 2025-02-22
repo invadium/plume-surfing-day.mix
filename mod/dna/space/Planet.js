@@ -6,15 +6,17 @@ class Planet extends Body {
 
     constructor(st) {
         super( extend({
-             name: 'planet' + (++id),
-             type:  0,
-            tribe:  0,
-                G:  1 * env.tune.G,
-                r:  100,
-               kR:  400,
-               gR:  500,
-               aG:  0.25 * PI,
-           cracks:  1 + lib.source.cosmology.rndi(4)
+               name: 'planet' + (++id),
+               type:  0,
+              tribe:  0,
+                  G:  1 * env.tune.G,
+                  r:  100,
+                 kR:  400,
+                 gR:  500,
+                 aG:  0.25 * PI,
+             cracks:  1 + lib.source.cosmology.rndi(4),
+            shakeAt:  0,
+              waveR:  0,
         }, st) )
 
         this.install([
@@ -38,9 +40,7 @@ class Planet extends Body {
                 new dna.space.pod.SelectionIndicator(),
             ])
         }
-
         this.color = env.style.color.planet[this.type]
-        this.seismicCharge   = env.tune.planet.baseSeismicCharge
     }
 
     spawnCrack() {
@@ -49,7 +49,7 @@ class Planet extends Body {
 
         this.install( new dna.space.pod.Crack({
             tau: tau,
-            depth: this.r - .4 * this.r - .3 * this.r * lib.source.cosmology.rndf(),
+            depth: ceil(this.r - .4 * this.r - .3 * this.r * lib.source.cosmology.rndf()),
         }) )
     }
 
@@ -69,7 +69,31 @@ class Planet extends Body {
     }
 
     shake() {
-        this.apply(crack => crack.shake(), e => e instanceof dna.space.pod.Crack)
+        this.shakeAt = env.time
+    }
+
+    shockwave() {
+        this.waveCharge = this.getShakeCharge() // same shake charge in the wave
+        this.waveR = this.getChargeRadius(this.waveCharge)
+        log(`mag: ${ceil(this.waveCharge * 10)} time: ${round((env.time - this.shakeAt) * 10)/10} wR:${round(this.waveR)}`)
+        this.shakeAt = 0
+    }
+
+    quake() {
+        this.apply(crack => crack.shake(this.waveCharge), e => e instanceof dna.space.pod.Crack)
+        this.waveR = 0
+        this.waveCharge = 0
+    }
+
+    evo(dt) {
+        super.evo(dt)
+
+        if (this.waveCharge) {
+            this.waveR += env.tune.waveSpeed * dt
+            if (this.waveR >= this.r) {
+                this.quake()
+            }
+        }
     }
 
     draw() {
@@ -93,11 +117,36 @@ class Planet extends Body {
 
         super.draw()
 
+        // seismic charge
+        const charge = this.getShakeCharge()
+        if (charge) {
+            const chargeR = this.getChargeRadius(charge)
+            lineWidth(4)
+            stroke( env.style.color.shakeCharge )
+            circle( 0, 0, chargeR )
+        }
+
+        // seismic wave
+        if (this.waveCharge) {
+            lineWidth(4)
+            stroke( env.style.color.seismicWave)
+            circle( 0, 0, this.waveR )
+        }
+
         restore()
     }
 
     onCapture(tribe, prevTribe) {
         log(`${this.name} is captured by @${tribe}`)
+    }
+
+    getShakeCharge() {
+        if (!this.shakeAt) return 0
+        return min((env.time - this.shakeAt) / env.tune.maxEffectiveShakeTime, 1)
+    }
+
+    getChargeRadius(charge) {
+        return this.r - .8 * this.r * charge
     }
 
     isWithinCrack(tau) {

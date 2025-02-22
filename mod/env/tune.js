@@ -4,20 +4,24 @@ const tune = {
     friction:   20,
     surfaceTug: 20,
 
+    maxEffectiveShakeTime: 2,
+    waveSpeed:             250,
+
     port: {
         slideSpeed: 1000,
         zoomFactor: 2,
     },
 
     planet: {
-        captureTime: 10,
+        captureTime:           10,
         seismicCapacityFactor: 4, // multiplied with a planet radius to get the capacity
-        baseSeismicCharge:     6,
+        baseSeismicChargeRate: 6,
+        varSeismicChargeRate:  4,
     },
 
     plume: {
         effectArea: 0.2,
-        ventProbability: 1/15,
+        ventProbability: 1/60,
     },
 
     creature: {

@@ -22,7 +22,7 @@ class BotProbe {
 
         fill('#ffff00')
         baseTop()
-        alignLeft()
+        alignRight()
         font(env.style.font.debug.head)
         text(`${state}`, this.x, this.y)
 

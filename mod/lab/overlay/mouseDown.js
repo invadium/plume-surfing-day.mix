@@ -10,6 +10,7 @@ function mouseDown(e) {
         if (planets.length > 0) {
             // TODO start the tectonic charge instead
             const planet = planets[0]
+            env.shakenPlanet = planet
             planet.shake()
         }
 
@@ -19,8 +20,8 @@ function mouseDown(e) {
 
     } else if (e.button === 1) {
         // middle click
-
-        if (last && last instanceof dna.space.Planet) {
+        if (!last) return
+        if ((last instanceof dna.space.Planet) || (env.debug && (last instanceof dna.space.Creature))) {
             lab.port.speed = env.tune.port.slideSpeed * lab.port.scale
             lab.port.follow(last, true)
         }

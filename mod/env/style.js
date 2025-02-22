@@ -13,6 +13,9 @@ const style = {
 
         space: '#2a1c31',
 
+        shakeCharge: '#d0763e',
+        seismicWave: '#ebac4d',
+
         tribe: [
             // neutral
             {

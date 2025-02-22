@@ -160,19 +160,30 @@ class Creature extends Body {
 
     onBound(planet) {
         //log(`${this.getTitle()} bounded to the planet [${planet.name}]`)
+        this._ls.forEach(e => {
+            if (isFun(e.onBound)) e.onBound(planet)
+        })
     }
 
-    onLanded(planet) {
+    onTouchdown(planet) {
         //log(`${this.getTitle()} just landed on the planet [${planet.name}]`)
+        this._ls.forEach(e => {
+            if (isFun(e.onTouchdown)) e.onTouchdown(planet)
+        })
     }
 
-    onLaunched(planet) {
+    onLaunch(planet) {
         //log(`${this.getTitle()} crossed the Karmal line of [${planet.name}]`)
+        this._ls.forEach(e => {
+            if (isFun(e.onLaunch)) e.onLaunch(planet)
+        })
     }
 
     onRelease(planet) {
         //log(`${this.getTitle()} released from the planet [${planet.name}]`)
-        this.momentum.rotSpeed = .25 * lib.source.events.rnda()
+        this._ls.forEach(e => {
+            if (isFun(e.onRelease)) e.onRelease(planet)
+        })
     }
 
     warpSpace() {
