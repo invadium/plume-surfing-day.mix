@@ -58,6 +58,7 @@ class Momentum {
             this.__.onBound(bound)
         }
         this.bound = bound
+        this.__.bounded = true
         return this.bound
     }
 
@@ -66,6 +67,7 @@ class Momentum {
             this.__.onRelease(this.bound)
         }
         this.bound = null
+        this.__.bounded = false
     }
 
     angularTarget(tau) {

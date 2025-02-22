@@ -1,5 +1,6 @@
 function belt() {
-    lab.background = env.style.color.space
+    env.beltRadius = 2000
+    lab.port.spawn( dna.space.BeltProbe )
 
     lab.port.spawn( dna.space.Planet, {
         name: 'Odin',
