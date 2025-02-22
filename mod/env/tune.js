@@ -17,6 +17,7 @@ const tune = {
 
     plume: {
         effectArea: 0.2,
+        ventProbability: 1/15,
     },
 
     creature: {

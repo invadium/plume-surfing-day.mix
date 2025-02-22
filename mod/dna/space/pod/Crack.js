@@ -70,7 +70,9 @@ class Crack {
         this.energy += this.__.seismicCharge * dt
         if (this.energy > this.seismicCapacity) {
             this.energy = this.seismicCapacity
-            this.vent()
+            if (lib.source.events.rndf() < env.tune.plume.ventProbability * dt) {
+                this.vent()
+            }
         }
     }
 
