@@ -4,6 +4,8 @@ function evo(dt) {
     const target = env.selected
 
     if (mouse.buttons & 1) {
+        if (!target.momentum) return
+
         if (target.surfaced) {
             // accelerate
             target.momentum.surfacePush(env.tune.debug.mouse.moveForce, dt)

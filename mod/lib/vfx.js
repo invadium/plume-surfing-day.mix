@@ -28,12 +28,12 @@ function impact(target, x, y, tau, color, intensity) {
         y: y,
         color: color,
         lifespan: 0.2,
-        force: 150 * intensity,
+        force: 100 * intensity,
         radius: 10,
         size: 1*s, vsize: 2*s,
-        speed: 10, vspeed: 100*s,
+        speed: 25, vspeed: 100*s,
         angle: tau - .8, spread: 1.6,
-        minLifespan: 0.5, vLifespan: 2,
+        minLifespan: .7, vLifespan: 1.4,
         drawParticle: function() {
             fill(this.color)
             rect(floor(this.x), floor(this.y), this.r, this.r)

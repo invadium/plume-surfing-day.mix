@@ -59,7 +59,8 @@ const style = {
         ],
 
         meteor: {
-            base: '#cfccca',
+            base:   '#cfccca',
+            impact: '#a6a6a6',
         },
 
         crack: {

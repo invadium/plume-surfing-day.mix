@@ -19,6 +19,8 @@ class Creature extends Body {
             hitForce:                env.tune.creature.baseHitForce,
 
             hitLog: [],
+
+            warpR: env.beltRadius,
         }, st) )
 
         this.install([
@@ -189,7 +191,7 @@ class Creature extends Body {
     }
 
     warpSpace() {
-        log(`warping ${this.getTitle()}!`)
+        // log(`warping ${this.getTitle()}!`)
         lib.vfx.warpFX(lab.port, this.x, this.y, env.style.color.warp.out)
         this.x = -this.x
         this.y = -this.y

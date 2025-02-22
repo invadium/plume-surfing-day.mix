@@ -24,12 +24,12 @@ class Meteor extends Body {
 
         if (env.debug) {
             this.install([
-                new dna.space.pod.RadiusProbe(),
-                new dna.space.pod.CoordinatesProbe({
-                    x: -this.r,
-                    y: 1.5 * this.r,
-                }), 
-                new dna.space.pod.MomentumProbe(),
+                // new dna.space.pod.RadiusProbe(),
+                //new dna.space.pod.CoordinatesProbe({
+                //    x: -this.r,
+                //    y: 1.5 * this.r,
+                //}), 
+                //new dna.space.pod.MomentumProbe(),
                 new dna.space.pod.SelectionIndicator(),
             ])
         }
@@ -55,7 +55,7 @@ class Meteor extends Body {
         kill(this)
         const ix = source.x + nV[0] * source.r
         const iy = source.y + nV[1] * source.r
-        lib.vfx.impact(lab.port, ix, iy, impactAngle, env.style.color.plume, 200)
+        lib.vfx.impact(lab.port, ix, iy, impactAngle, env.style.color.meteor.impact, 200)
     }
 
     draw() {
@@ -69,5 +69,9 @@ class Meteor extends Body {
         super.draw()
 
         restore()
+    }
+
+    warpSpace() {
+        kill(this)
     }
 }

@@ -2,6 +2,8 @@ function randomSources() {
     lib.touch('source')
     const cosmology = lib.source.attach( math.createRandomGenerator(), 'cosmology')
     cosmology.setSeed( env.tune.source.cosmology )
+    const meteor = lib.source.attach( math.createRandomGenerator(), 'meteor')
+    meteor.setSeed( env.tune.source.meteor )
     const events = lib.source.attach( math.createRandomGenerator(), 'events')
     events.setSeed( env.tune.source.events )
     const bot = lib.source.attach( math.createRandomGenerator(), 'bot')

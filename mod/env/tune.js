@@ -19,8 +19,10 @@ const tune = {
         varSeismicChargeRate:  4,
     },
 
+    meteorFq:  .1,
+
     plume: {
-        effectArea: 0.2,
+        effectArea:      0.2,
         ventProbability: 1/60,
     },
 
@@ -41,6 +43,7 @@ const tune = {
 
     source: {
         cosmology:  101,
+        meteor:     109,
         events:     202,
         bot:        303,
         background: 404,
