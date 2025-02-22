@@ -64,10 +64,12 @@ class Planet extends Body {
     }
 
     shake() {
+        const releasedEnergy = this.energy
+        this.energy = this.energy - releasedEnergy
+
         const cracks = this._ls.filter(e => e instanceof dna.space.pod.Crack)
-        // TODO calculate tectonic energy and split over all active plumes
-        cracks.forEach(crack => crack.plume(100))
-        this.energy = 0
+        const crackEnergy = releasedEnergy / cracks.length // TODO maybe we don't need to split? may result in weak plumes
+        cracks.forEach(crack => crack.plume(crackEnergy))
     }
 
     // TODO vent out excessive tectonic energy
