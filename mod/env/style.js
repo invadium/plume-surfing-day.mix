@@ -62,6 +62,11 @@ const style = {
         },
 
         plume: '#cfccca',
+
+        warp: {
+            out:  '#ebac4d',
+            back: '#7dadc8',
+        },
     },
 
     font: {

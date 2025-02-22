@@ -14,7 +14,7 @@ class Planet extends Body {
                kR:  400,
                gR:  500,
                aG:  0.25 * PI,
-           energy:  0,
+           cracks:  1 + lib.source.cosmology.rndi(4)
         }, st) )
 
         this.install([
@@ -24,13 +24,9 @@ class Planet extends Body {
             new dna.space.pod.Rotation({
                 rspeed: 0.025 * PI,
             }),
-            new dna.space.pod.Crack({
-                tau: math.rnda(),
-                r1: this.r * .5,
-                r2: this.r,
-            }),
             new dna.space.pod.PlanetOwnerMonitor(),
         ])
+        for (let i = 0; i < this.cracks; i++) this.spawnCrack()
 
         if (env.debug) {
             this.install([
@@ -44,8 +40,17 @@ class Planet extends Body {
         }
 
         this.color = env.style.color.planet[this.type]
-        this.seismicCapacity = env.tune.planet.seismicCapacityFactor * this.r
         this.seismicCharge   = env.tune.planet.baseSeismicCharge
+    }
+
+    spawnCrack() {
+        const tau = lib.source.cosmology.rnda()
+        if (this.isCrackedArea(tau)) return
+
+        this.install( new dna.space.pod.Crack({
+            tau: tau,
+            depth: this.r - .4 * this.r - .3 * this.r * lib.source.cosmology.rndf(),
+        }) )
     }
 
     worldToPolar(wx, wy) {
@@ -64,33 +69,7 @@ class Planet extends Body {
     }
 
     shake() {
-        const releasedEnergy = this.energy
-        this.energy = this.energy - releasedEnergy
-
-        const cracks = this._ls.filter(e => e instanceof dna.space.pod.Crack)
-        const crackEnergy = releasedEnergy / cracks.length // TODO maybe we don't need to split? may result in weak plumes
-        cracks.forEach(crack => crack.plume(crackEnergy))
-    }
-
-    // TODO vent out excessive tectonic energy
-    vent() {
-        const ventRate = lib.source.events.rndf()
-        const releasedEnergy = this.energy * ventRate
-        this.energy = this.energy - releasedEnergy
-
-        const cracks = this._ls.filter(e => e instanceof dna.space.pod.Crack)
-        const crackEnergy = releasedEnergy / cracks.length
-        cracks.forEach(crack => crack.plume(crackEnergy))
-    }
-
-    evo(dt) {
-        super.evo(dt)
-
-        this.energy += this.seismicCharge * dt
-        if (this.energy > this.seismicCapacity) {
-            this.energy = this.seismicCapacity
-            this.vent()
-        }
+        this.apply(crack => crack.shake(), e => e instanceof dna.space.pod.Crack)
     }
 
     draw() {
@@ -133,7 +112,16 @@ class Planet extends Body {
         return within
     }
 
-    getCharge() {
-        return this.energy / this.seismicCapacity
+    isCrackedArea(tau) {
+        tau = lib.util.balancedAngle(tau)
+        let within = false
+        this._ls.forEach(e => {
+            if (e instanceof dna.space.pod.Crack
+                    && abs(e.tau - tau) <= env.tune.plume.effectArea * 4) {
+                within = true
+            }
+        })
+        return within
     }
+
 }

@@ -159,19 +159,28 @@ class Creature extends Body {
     }
 
     onBound(planet) {
-        log(`${this.getTitle()} bounded to the planet [${planet.name}]`)
+        //log(`${this.getTitle()} bounded to the planet [${planet.name}]`)
     }
 
     onLanded(planet) {
-        log(`${this.getTitle()} just landed on the planet [${planet.name}]`)
+        //log(`${this.getTitle()} just landed on the planet [${planet.name}]`)
     }
 
     onLaunched(planet) {
-        log(`${this.getTitle()} crossed the Karmal line of [${planet.name}]`)
+        //log(`${this.getTitle()} crossed the Karmal line of [${planet.name}]`)
     }
 
     onRelease(planet) {
-        log(`${this.getTitle()} released from the planet [${planet.name}]`)
+        //log(`${this.getTitle()} released from the planet [${planet.name}]`)
+        this.momentum.rotSpeed = .25 * lib.source.events.rnda()
+    }
+
+    warpSpace() {
+        log(`warping ${this.getTitle()}!`)
+        lib.vfx.warpFX(lab.port, this.x, this.y, env.style.color.warp.out)
+        this.x = -this.x
+        this.y = -this.y
+        lib.vfx.warpFX(lab.port, this.x, this.y, env.style.color.warp.back)
     }
 
     kill(source) {

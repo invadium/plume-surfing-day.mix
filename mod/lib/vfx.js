@@ -118,6 +118,26 @@ function capture(target, x, y, color) {
     })
 }
 
+function warpFX(target, x, y, color) {
+    const s = ry(.001)
+    target.spawn(dna.Emitter, {
+        x: x,
+        y: y,
+        //dx: -70*s,
+        color: color,
+        lifespan: 0.05,
+        force: 4000,
+        radius: 0,
+        size: 2*s, vsize: 4*s,
+        speed: 100*s, vspeed: 20*s,
+        angle: 0, spread: PI2,
+        minLifespan: .8, vLifespan: .8,
+        drawParticle: function() {
+            fill(this.color)
+            rect(floor(this.x), floor(this.y), this.r, this.r)
+        }
+    })
+}
 
 function ouch(target, x, y, color) {
     const s = ry(.001)
@@ -139,9 +159,6 @@ function ouch(target, x, y, color) {
         }
     })
 }
-
-
-
 
 function death(target, x, y, color) {
     const s = ry(.001)

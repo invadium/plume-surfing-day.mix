@@ -11,8 +11,8 @@ const tune = {
 
     planet: {
         captureTime: 10,
-        seismicCapacityFactor: 2, // multiplied with a planet radius to get the capacity
-        baseSeismicCharge:     4,
+        seismicCapacityFactor: 4, // multiplied with a planet radius to get the capacity
+        baseSeismicCharge:     6,
     },
 
     plume: {
@@ -38,6 +38,8 @@ const tune = {
         bot:        303,
         background: 404,
     },
+
+    warpProbePeriod: 5,
 
     debug: {
         mouse: {

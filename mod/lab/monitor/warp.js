@@ -1,3 +1,12 @@
+/*
+ * Warp Monitor checks the boundaries of our belt system
+ * and makes sure the creatures are not flying far away from it.
+ *
+ * Once they do, warps the space so they will return back
+ * from the other side.
+ */
+
+// 
 let lastProbe = 0
 
 function warpSpace() {
@@ -5,15 +14,13 @@ function warpSpace() {
         if (e instanceof dna.space.Creature
                 && !e.bounded
                 && dist(0, 0, e.x, e.y) > env.beltRadius) {
-            log(`warping ${e.getTitle()}!`)
-            e.x = -e.x
-            e.y = -e.y
+            e.warpSpace()
         }
     })
 }
 
 function evo(dt) {
-    if (lastProbe + 5 < env.time) {
+    if (lastProbe + env.tune.warpProbePeriod < env.time) {
         warpSpace()
         lastProbe = env.time
     }
