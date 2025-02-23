@@ -144,6 +144,8 @@ class Creature extends Body {
                 // TODO determine the amount of damage based on speed/hight etc
                 this.damage(source.hitForce, source)
                 source.damage(this.hitForce, this)
+
+                lib.sfx('punch')
             }
         }
     }
@@ -153,6 +155,7 @@ class Creature extends Body {
 
         this.collect(deposit.mass)
         lib.vfx.pickUp(lab.port, deposit.x, deposit.y, env.style.color.mineralDeposit.pickUp)
+        lib.sfx('pickUp')
         kill(deposit)
     }
 
@@ -221,6 +224,7 @@ class Creature extends Body {
         this._ls.forEach(e => {
             if (isFun(e.onTouchdown)) e.onTouchdown(planet)
         })
+        lib.sfx('touchdown')
     }
 
     onLaunch(planet) {
@@ -264,6 +268,7 @@ class Creature extends Body {
                   ly    = sin(polar[0]) * (polar[1] - .7 * this.r)
             lib.vfx.zap(surface, lx, ly, polar[0], this.color.high)
         }
+        lib.sfx('death')
     }
 
     getTitle() {

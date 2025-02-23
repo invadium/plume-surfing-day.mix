@@ -56,7 +56,9 @@ class Meteor extends Body {
         kill(this, source)
         const ix = source.x + nV[0] * source.r
         const iy = source.y + nV[1] * source.r
+
         lib.vfx.impact(lab.port, ix, iy, impactAngle, env.style.color.meteor.impact, 200)
+        lib.sfx('impact')
 
         lab.port.spawn( dna.space.MineralDeposit, {
             x:    ix,

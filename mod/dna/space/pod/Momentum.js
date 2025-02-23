@@ -136,6 +136,7 @@ class Momentum {
                     const lx = cos(phi) * surface.r
                     const ly = sin(phi) * surface.r
                     lib.vfx.touchdown(surface, lx, ly, phi, '#c0c0c0a0', 5 + abs(verticalSpeed/10))
+                    lib.sfx('touchdown', .7)
                     // log(`landing speed: ${5 + abs(verticalSpeed/10)}`)
                     __.touchingSurface = true
                 }

@@ -50,6 +50,7 @@ class Crack {
         })
 
         lib.vfx.plume(this.__, lx, ly, this.tau, env.style.color.plume, releasedEnergy)
+        lib.sfx('plume')
     }
 
     vent() {

@@ -70,6 +70,7 @@ class Planet extends Body {
 
     shake() {
         this.shakeAt = env.time
+        lib.sfx('shake')
     }
 
     shockwave() {
@@ -140,6 +141,7 @@ class Planet extends Body {
 
     onCapture(tribe, prevTribe) {
         log(`${this.name} is captured by @${tribe}`)
+        lib.sfx('capture')
     }
 
     getShakeCharge() {
