@@ -8,7 +8,7 @@ class MineralDeposit extends Body {
         super( extend({
             type: '',
             name: 'deposit' + (++id),
-            value: 1,
+            mass:  10,
             r:     10,
 
             warpR: env.beltRadius,

@@ -19,7 +19,11 @@ const tune = {
         varSeismicChargeRate:  4,
     },
 
-    meteorFq:  .1,
+    meteor: {
+        baseFq:    .1,
+        baseMass:   4,
+        varMass:    12,
+    },
 
     plume: {
         effectArea:      0.2,
@@ -27,14 +31,17 @@ const tune = {
     },
 
     creature: {
-        baseSurfaceSpeed: 50,
-        baseSurfaceForce: 4000,
-        baseSurfaceJump:  40,
-        baseHP:           100,
-        baseHitForce:     20,
-        hitDelay:         1,
-        wakeUpJump:       25,
-        wakeAcceleration: 15,
+        baseSurfaceSpeed:  50,
+        baseSurfaceForce:  4000,
+        baseSurfaceJump:   40,
+        baseHP:            100,
+        baseHitForce:      20,
+        hitDelay:          1,
+        wakeUpJump:        25,
+        wakeAcceleration:  15,
+        procreationCost:   5,
+        procreationBan:    15,
+        procreationHealth: .5,
     },
 
     tribe: {

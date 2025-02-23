@@ -39,7 +39,9 @@ class Crack {
         const lower  = math.normalizeAngle(this.tau - env.tune.plume.effectArea)
         const higher = math.normalizeAngle(this.tau + env.tune.plume.effectArea)
         lab.port._ls.forEach(e => {
-            if (!e.dead && e instanceof dna.space.Creature && e.momentum.surface === planet) {
+            if (!e.dead
+                    && (e instanceof dna.space.Creature || e instanceof dna.space.MineralDeposit)
+                    && e.momentum.surface === planet) {
                 const tau = math.normalizeAngle(e.polar[0])
                 if (lib.util.angleInRange(tau, lower, higher)) {
                     e.momentum.surfaceJumpAction(releasedEnergy)

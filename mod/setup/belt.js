@@ -1,5 +1,6 @@
 function belt() {
     env.beltRadius = 2000
+    env.meteorFq   = env.tune.meteor.baseFq
     lab.port.spawn( dna.space.BeltProbe )
 
     lab.port.spawn( dna.space.Planet, {
@@ -84,12 +85,14 @@ function belt() {
         x: 100,
         y: 0,
         r: 10,
+        mass: 10,
     })
 
     lab.port.spawn( dna.space.MineralDeposit, {
         x: 100,
         y: 50,
         r: 10,
+        mass: 10,
     })
 }
 belt.Z = 21

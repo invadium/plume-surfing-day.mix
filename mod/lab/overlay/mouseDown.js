@@ -15,12 +15,19 @@ function mouseDown(e) {
         }
 
         const creatures = ls.filter(e => e instanceof dna.space.Creature)
-        creatures.forEach( creature => creature.wakeUp() )
-
+        //creatures.forEach( creature => creature.wakeUp() )
+        if (creatures.length > 0) creatures[0].wakeUp()
 
     } else if (e.button === 1) {
         // middle click
-        if (!last) return
+        if (!env.debug) return
+
+        if (!last) {
+            // switch special actions
+            lib.actions.switchSpecialAction()
+            return
+        }
+
         if ((last instanceof dna.space.Planet) || (env.debug && (last instanceof dna.space.Creature))) {
             lab.port.speed = env.tune.port.slideSpeed * lab.port.scale
             lab.port.follow(last, true)
@@ -28,6 +35,7 @@ function mouseDown(e) {
 
     } else if (e.button === 2) {
         // right click
+        if (!env.debug) return
 
         // log world coordinates
         const {x, y} = e
@@ -44,12 +52,17 @@ function mouseDown(e) {
             lib.vfx.ouch(lab.port, w.x, w.y, '#aabb00')
 
         } else {
-            if (env.selected) {
-                env.selected.selected = false
-                env.selected = null
+            if (lib.specialAction) {
+                lib.specialAction(w.x, w.y)
+            }  else {
+                if (env.selected) {
+                    // deselect
+                    env.selected.selected = false
+                    env.selected = null
+                }
+                lib.vfx.ouch(lab.port, w.x, w.y, '#ee4000')
+                //lib.vfx.touchdown(lab.port, w.x, w.y, '#ffff00')
             }
-            lib.vfx.ouch(lab.port, w.x, w.y, '#ee4000')
-            //lib.vfx.touchdown(lab.port, w.x, w.y, '#ffff00')
         }
     }
 }

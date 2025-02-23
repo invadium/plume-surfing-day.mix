@@ -1,6 +1,6 @@
 
 function evo(dt) {
-    if (lib.source.meteor.rndf() > env.tune.meteorFq * dt) return
+    if (lib.source.meteor.rndf() > env.meteorFq * dt) return
 
     // determine the target point
     const targetTau = lib.source.meteor.rnda(),
@@ -16,10 +16,12 @@ function evo(dt) {
 
     const phi = bearing(sx, sy, tx, ty)
 
+    const mass = env.tune.meteor.baseMass + env.tune.meteor.varMass * lib.source.meteor.rndf()
     const meteor = lab.port.spawn( dna.space.Meteor, {
         x:     sx,
         y:     sy,
-        r:     10,
+        r:     mass,
+        mass:  mass,
         warpR: 1.2 * sourceR,
     })
     meteor.momentum.speedV = [

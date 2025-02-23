@@ -6,12 +6,14 @@ class Creature extends Body {
 
     constructor(st) {
         super( extend({
-            type: 'creature',
-            name: 'creature' + (++id),
-            tribe: 0,
-            hp:    env.tune.creature.baseHP,
-            r:     30,
-            dir:   0,    // points to where the creature is looking at
+            type:   'creature',
+            name:   'creature' + (++id),
+            tribe:   0,
+            hp:      100,
+            maxHP:   env.tune.creature.baseHP,
+            fortune: 0,
+            r:       30,
+            dir:     0,    // points to where the creature is looking at
 
             maxSurfaceSpeed:         env.tune.creature.baseSurfaceSpeed,
             surfacePushForce:        env.tune.creature.baseSurfaceForce,
@@ -19,6 +21,7 @@ class Creature extends Body {
             hitForce:                env.tune.creature.baseHitForce,
 
             hitLog: [],
+            lastReproduction: 0,
 
             warpR: env.beltRadius,
         }, st) )
@@ -31,7 +34,7 @@ class Creature extends Body {
                 boundable: true,
             }),
             new dna.space.pod.SolidCircle({
-                r: 20,
+                r: 18,
             }),
             new dna.space.pod.SmartBot(),
         ])
@@ -51,6 +54,8 @@ class Creature extends Body {
                 }),
             ])
         }
+
+        this.hp = this.maxHP
         this.color = env.style.color.tribe[this.tribe]
     }
 
@@ -61,6 +66,16 @@ class Creature extends Body {
             this.momentum.surfacePropelAction(env.tune.creature.wakeAcceleration)
             if (this.bot.switchAttitude) this.bot.switchAttitude()
         }
+    }
+
+    pay(value) {
+        if (this.fortune < value) return false
+        this.fortune = floor(this.fortune - value)
+        return true
+    }
+
+    collect(value) {
+        this.fortune = floor(this.fortune + value)
     }
 
     registerHit(source) {
@@ -99,20 +114,43 @@ class Creature extends Body {
     }
 
     hit(source) {
-        if (!(source instanceof dna.space.Creature) || this.tribe === source.tribe) return
+        if (!(source instanceof dna.space.Creature)) return
 
-        if (this.registerHit(source)) {
-            //log(`${this.getTitle()} battles with ${source.getTitle()}`)
-            // TODO determine the amount of damage based on speed/hight etc
-            this.damage(source.hitForce, source)
-            source.damage(this.hitForce, this)
+        if (this.tribe === source.tribe) {
+            // try to procreature if fortunate
+            if (this.isReadyToReproduce() && source.isReadyToReproduce()) {
+                this.pay(env.tune.creature.procreationCost)
+                source.pay(env.tune.creature.procreationCost)
+                this.lastReproduction   = env.time
+                source.lastReproduction = env.time
+
+                const newBorn = lab.port.spawn( dna.space.Creature, {
+                    tribe:  this.tribe,
+                    alias:  this.name + '-' + source.name,
+                    x:     .5 * (this.x + source.x),
+                    y:     .5 * (this.y + source.y),
+                })
+
+                defer(() => {
+                    newBorn.momentum.surfaceJumpAction(env.tune.creature.wakeUpJump)
+                    newBorn.momentum.surfacePropelAction(env.tune.creature.wakeAcceleration)
+                }, .1)
+            }
+        } else {
+            // try to fight
+            if (this.registerHit(source)) {
+                //log(`${this.getTitle()} battles with ${source.getTitle()}`)
+                // TODO determine the amount of damage based on speed/hight etc
+                this.damage(source.hitForce, source)
+                source.damage(this.hitForce, this)
+            }
         }
     }
 
     pickUp(deposit) {
         if (!(deposit instanceof dna.space.MineralDeposit)) return
 
-        log(this.getTitle() + ' picked up gold!')
+        this.collect(deposit.mass)
         lib.vfx.pickUp(lab.port, deposit.x, deposit.y, env.style.color.mineralDeposit.pickUp)
         kill(deposit)
     }
@@ -196,6 +234,14 @@ class Creature extends Body {
         this._ls.forEach(e => {
             if (isFun(e.onRelease)) e.onRelease(planet)
         })
+    }
+
+    isReadyToReproduce() {
+        return (
+               this.hp >= this.maxHP * env.tune.creature.procreationHealth
+            && this.fortune >= env.tune.creature.procreationCost
+            && this.lastReproduction + env.tune.creature.procreationBan < env.time
+        )
     }
 
     warpSpace() {

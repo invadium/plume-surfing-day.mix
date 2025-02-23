@@ -59,8 +59,10 @@ class Meteor extends Body {
         lib.vfx.impact(lab.port, ix, iy, impactAngle, env.style.color.meteor.impact, 200)
 
         lab.port.spawn( dna.space.MineralDeposit, {
-            x: ix,
-            y: iy,
+            x:    ix,
+            y:    iy,
+            r:    this.r,
+            mass: this.mass,
         })
     }
 
