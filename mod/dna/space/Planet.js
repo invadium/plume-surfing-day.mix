@@ -13,7 +13,7 @@ class Planet extends Body {
                   r:  100,
                  kR:  400,
                  gR:  500,
-                 aG:  0.25 * PI,
+                 aG:  (0.15 + .3 * lib.source.cosmology.rndf()) * PI,
              cracks:  1 + lib.source.cosmology.rndi(4),
             shakeAt:  0,
               waveR:  0,
@@ -41,6 +41,22 @@ class Planet extends Body {
             ])
         }
         this.color = env.style.color.planet[this.type]
+
+        if (this.pop) this.populate()
+    }
+
+    populate() {
+        const { tribe, x, y, r } = this
+
+        for (let i = 0; i < this.pop; i++) {
+            const tau = lib.source.cosmology.rnda()
+            const R   = (1.2 + .8 * lib.source.cosmology.rndf()) * r
+            lab.port.spawn( dna.space.Creature, {
+                tribe: tribe,
+                x:     x + R * cos(tau),
+                y:     y + R * sin(tau),
+            })
+        }
     }
 
     spawnCrack() {

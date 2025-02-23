@@ -9,6 +9,7 @@ units.json
 # collider.jam output
 out*
 dist*
+*.out
 
 # output packages
 *.zip

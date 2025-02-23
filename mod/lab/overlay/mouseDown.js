@@ -39,7 +39,10 @@ function mouseDown(e) {
         // log world coordinates
         const {x, y} = e
         const w = lab.port.lxy(x, y)
-        log('coords: ' + w.x + ':' + w.y)
+        log('coords:\n'
+            + 'x: ' + round(w.x) + ', \n'
+            + 'y: ' + round(w.y) + ', \n'
+        )
 
         if (last) {
             if (env.selected) {
