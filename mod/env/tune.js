@@ -42,6 +42,7 @@ const tune = {
         procreationCost:   5,
         procreationBan:    15,
         procreationHealth: .5,
+        hpRestoreRate:     1,
     },
 
     tribe: {

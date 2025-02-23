@@ -36,6 +36,7 @@ class Creature extends Body {
             new dna.space.pod.SolidCircle({
                 r: 18,
             }),
+            new dna.space.pod.HealthPod(),
             new dna.space.pod.SmartBot(),
         ])
 

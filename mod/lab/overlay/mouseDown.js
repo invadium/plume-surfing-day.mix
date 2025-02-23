@@ -20,7 +20,6 @@ function mouseDown(e) {
 
     } else if (e.button === 1) {
         // middle click
-        if (!env.debug) return
 
         if (!last) {
             // switch special actions

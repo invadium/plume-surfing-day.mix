@@ -37,6 +37,8 @@ const actionList = [
 ]
 
 function switchSpecialAction() {
+    if (!env.debug) return
+
     currentSpecial ++
     if (currentSpecial >= actionList.length) currentSpecial = -1
 
