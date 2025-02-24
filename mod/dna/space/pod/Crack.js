@@ -67,6 +67,10 @@ class Crack {
         this.plume(this.energy * charge)
     }
 
+    fullCharge() {
+        this.energy = this.seismicCapacity
+    }
+
     drawShape(sh) {
         moveTo(this.r1,  0)
         lineTo(this.r2, -sh)

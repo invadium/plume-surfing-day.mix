@@ -82,6 +82,26 @@ function zap(target, x, y, tau, color) {
     })
 }
 
+function annihilate(target, x, y, color) {
+    const s = ry(.001)
+    target.spawn(dna.Emitter, {
+        x: x,
+        y: y,
+        color: color,
+        lifespan: .5,
+        force: 5000,
+        radius: 15,
+        size: 2*s, vsize: 3*s,
+        speed: 50*s, vspeed: 80*s,
+        angle: 0, spread: TAU,
+        minLifespan: .1, vLifespan: 1.5,
+        drawParticle: function() {
+            fill(this.color)
+            rect(floor(this.x), floor(this.y), this.r, this.r)
+        }
+    })
+}
+
 function touchdown(target, x, y, tau, color, intensity) {
     const s = ry(.001)
     target.spawn(dna.Emitter, {

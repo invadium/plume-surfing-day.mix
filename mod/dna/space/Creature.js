@@ -261,12 +261,14 @@ class Creature extends Body {
         this.__.detach(this)
         log(`${this.getTitle()} is killed by ${source.getTitle()}`)
 
-        const surface = this.momentum.surface
-        if (surface) {
+        if (this.surfaced) {
+            const surface = this.momentum.surface
             const polar = this.polar,
                   lx    = cos(polar[0]) * (polar[1] - .7 * this.r),
                   ly    = sin(polar[0]) * (polar[1] - .7 * this.r)
             lib.vfx.zap(surface, lx, ly, polar[0], this.color.high)
+        } else {
+            lib.vfx.annihilate(lab.port, this.x, this.y, this.color.high)
         }
         lib.sfx('death')
     }
