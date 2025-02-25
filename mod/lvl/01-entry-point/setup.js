@@ -1,5 +1,4 @@
-
-function belt() {
+function setup() {
     env.beltRadius = 2500
     env.meteorFq   = env.tune.meteor.baseFq
     lab.port.spawn( dna.space.BeltProbe )
@@ -242,4 +241,3 @@ function belt() {
     })
     */
 }
-belt.Z = 21
