@@ -5,7 +5,7 @@ function level(st) {
         nextLevel = $.lvl._ls[st - 1]
     } else if (isStr(st)) {
         // locate by name
-        nextLevel = $.lvl.find(l => l.level.title === st)
+        nextLevel = $.lvl.selectOne(l => l.level.title === st)
     }
 
     if (!nextLevel) throw new Error(`Level [${st}] is not found!`)
