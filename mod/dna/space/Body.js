@@ -109,7 +109,7 @@ class Body extends LabFrame {
         pod.paused      = false
         pod.hidden      = false
         pod.disabled    = false
-        if (pod.name !== pod.alias) {
+        if (pod.alias && pod.name !== pod.alias) {
             this[pod.alias] = pod
         }
         if (pod.onActivate) pod.onActivate()

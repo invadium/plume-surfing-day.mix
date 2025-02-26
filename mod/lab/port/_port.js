@@ -7,4 +7,3 @@ const _port = {
     zoomSpeed:  1.5,
     zoomOnPlusMinus: true,
 }
-

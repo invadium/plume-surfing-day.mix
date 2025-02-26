@@ -58,7 +58,7 @@ const style = {
             }
         ],
 
-        meteor: {
+        asteroid: {
             base:   '#cfccca',
             impact: '#a6a6a6',
         },

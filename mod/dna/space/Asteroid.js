@@ -2,11 +2,12 @@ const Body = require('dna/space/Body')
 
 let id = 0
 
-class Meteor extends Body {
+class Asteroid extends Body {
 
     constructor(st) {
+
         super( extend({
-            name: 'meteor' + (++id),
+            name: 'asteroid' + (++id),
                r: 10,
         }, st) )
 
@@ -23,7 +24,7 @@ class Meteor extends Body {
         ])
 
         if (env.debug) this.install([
-            // new dna.space.pod.RadiusProbe(),
+            //new dna.space.pod.RadiusProbe(),
             //new dna.space.pod.CoordinatesProbe({
             //    x: -this.r,
             //    y: 1.5 * this.r,
@@ -57,7 +58,7 @@ class Meteor extends Body {
         const ix = source.x + nV[0] * source.r
         const iy = source.y + nV[1] * source.r
 
-        lib.vfx.impact(lab.port, ix, iy, impactAngle, env.style.color.meteor.impact, 200)
+        lib.vfx.impact(lab.port, ix, iy, impactAngle, env.style.color.asteroid.impact, 200)
         lib.sfx('impact')
 
         lab.port.spawn( dna.space.MineralDeposit, {
@@ -73,7 +74,7 @@ class Meteor extends Body {
         translate( this.x, this.y )
         rotate(this.dir)
 
-        fill( env.style.color.meteor.base )
+        fill( env.style.color.asteroid.base )
         circle( 0, 0, this.r )
 
         super.draw()

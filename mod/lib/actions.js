@@ -13,7 +13,7 @@ const actionList = [
 
     function spawnDeposit(x, y) {
         //log(`deposit at ${x}:${y}`)
-        const mass = env.tune.meteor.baseMass + env.tune.meteor.varMass * lib.source.meteor.rndf()
+        const mass = env.tune.asteroid.baseMass + env.tune.asteroid.varMass * lib.source.asteroid.rndf()
         lab.port.spawn( dna.space.MineralDeposit, {
             x:    x,
             y:    y,
@@ -22,11 +22,11 @@ const actionList = [
         })
     },
 
-    function spawnMeteor(x, y) {
-        //log(`meteor at ${x}:${y}`)
+    function spawnAsteroid(x, y) {
+        //log(`asteroid at ${x}:${y}`)
         const sourceR = 2 * env.beltRadius
-        const mass = env.tune.meteor.baseMass + env.tune.meteor.varMass * lib.source.meteor.rndf()
-        lab.port.spawn( dna.space.Meteor, {
+        const mass = env.tune.asteroid.baseMass + env.tune.asteroid.varMass * lib.source.asteroid.rndf()
+        lab.port.spawn( dna.space.Asteroid, {
             x:     x,
             y:     y,
             r:     mass,
