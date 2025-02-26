@@ -3,7 +3,8 @@ class BeltProbe {
 
     constructor(st) {
         extend(this, {
-            name: 'beltProbe',
+            'transient':  true,
+            name:        'beltProbe',
         }, st)
     }
 

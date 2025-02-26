@@ -1,7 +1,6 @@
 function setup() {
     env.beltRadius = 2500
     env.asteroidFq   = env.tune.asteroid.baseFq
-    lab.port.spawn( dna.space.BeltProbe )
 
     // central planet
     lab.port.spawn( dna.space.Planet, {
