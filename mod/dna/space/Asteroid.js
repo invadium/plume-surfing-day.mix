@@ -2,13 +2,17 @@ const Body = require('dna/space/Body')
 
 let id = 0
 
+const MAX_TRAIL   = 20
+
 class Asteroid extends Body {
 
     constructor(st) {
 
         super( extend({
             name: 'asteroid' + (++id),
-               r: 10,
+            r:     10,
+
+            trail:   [],
         }, st) )
 
         this.install([
@@ -69,13 +73,37 @@ class Asteroid extends Body {
         })
     }
 
+    evo(dt) {
+        super.evo(dt)
+
+        const hr = .5 * this.r
+        const lastMark = this.trail[0]
+        if (!lastMark || abs(lastMark[0] - this.x) > hr || abs(lastMark[1] - this.y) > hr) {
+            this.trail.unshift([ this.x, this.y ])
+            if (this.trail.length > MAX_TRAIL) this.trail.pop()
+        }
+    }
+
     draw() {
+        const r  = this.r,
+              hr = .5 * r
         save() 
+
+        save()
+        for (let i = this.trail.length - 1; i > 0; i--) {
+            const mark = this.trail[i]
+            const factor = 1 - i/MAX_TRAIL
+            alpha(factor)
+            fill( env.style.color.asteroid.base )
+            circle( mark[0], mark[1], hr + hr * factor)
+        }
+        restore()
+
         translate( this.x, this.y )
         rotate(this.dir)
 
         fill( env.style.color.asteroid.base )
-        circle( 0, 0, this.r )
+        circle( 0, 0, r )
 
         super.draw()
 
