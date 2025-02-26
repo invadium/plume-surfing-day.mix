@@ -1,3 +1,6 @@
 function clearAll() {
-    lab.port.detachAll()
+    const port = lab.port
+    lab.port._ls.forEach(e => {
+        if (!e.transient) port.detach(e)
+    })
 }

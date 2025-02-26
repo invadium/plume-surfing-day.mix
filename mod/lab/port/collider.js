@@ -1,8 +1,6 @@
 function evo(dt) {
     this.__.collide(
         (hitter, target) => {
-            //if (hitter instanceof dna.space.Projectile && target instanceof dna.space.Outpost) debugger
-
             if (!hitter.solid.noContact) {
                 target.solid.contact( hitter, hitter.solid, (contactTarget, contactSolid, contactPoint) => {
                     if (contactTarget.hit) {
@@ -19,7 +17,11 @@ function evo(dt) {
                 log(contact.info)
             }
             */
-        }, 
+        },
         e => (e.solid && !e.dead)
     )
+}
+
+function init() {
+    this.transient = true
 }
