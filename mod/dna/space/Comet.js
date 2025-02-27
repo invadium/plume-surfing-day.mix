@@ -2,8 +2,6 @@ const Body = require('dna/space/Body')
 
 let id = 0
 
-const MAX_TRAIL = 20
-
 class Comet extends Body {
 
     constructor(st) {
@@ -80,7 +78,7 @@ class Comet extends Body {
         const lastMark = this.trail[0]
         if (!lastMark || abs(lastMark[0] - this.x) > hr || abs(lastMark[1] - this.y) > hr) {
             this.trail.unshift([ this.x, this.y ])
-            if (this.trail.length > MAX_TRAIL) this.trail.pop()
+            if (this.trail.length > env.tune.comet.trail) this.trail.pop()
         }
     }
 
@@ -92,7 +90,7 @@ class Comet extends Body {
         save()
         for (let i = this.trail.length - 1; i > 0; i--) {
             const mark = this.trail[i]
-            const factor = 1 - i/MAX_TRAIL
+            const factor = 1 - i/env.tune.comet.trail
             alpha(factor)
             fill( env.style.color.comet.base )
             circle( mark[0], mark[1], hr + hr * factor)

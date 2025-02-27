@@ -1,6 +1,6 @@
 
 function evo(dt) {
-    if (!(lib.source.comet.rndf() < env.comet* dt)) return
+    if (!(lib.source.comet.rndf() < env.cometFq * dt)) return
 
     // determine the target point
     const targetTau = lib.source.comet.rnda(),

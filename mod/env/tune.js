@@ -23,6 +23,7 @@ const tune = {
         baseFq:    .1,
         baseMass:   4,
         varMass:    12,
+        trail:      30,
     },
 
     plume: {

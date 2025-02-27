@@ -80,6 +80,15 @@ const style = {
             out:  '#ebac4d',
             back: '#7dadc8',
         },
+
+        star: [
+            '#ece6df',
+            '#b0d6d9',
+            '#7dadc8',
+            '#ebac4d',
+            '#d0763e',
+            '#c74446',
+        ],
     },
 
     font: {
