@@ -58,7 +58,7 @@ const style = {
             }
         ],
 
-        asteroid: {
+        comet: {
             base:   '#cfccca',
             impact: '#a6a6a6',
         },

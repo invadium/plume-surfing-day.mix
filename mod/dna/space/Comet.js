@@ -2,14 +2,14 @@ const Body = require('dna/space/Body')
 
 let id = 0
 
-const MAX_TRAIL   = 20
+const MAX_TRAIL = 20
 
-class Asteroid extends Body {
+class Comet extends Body {
 
     constructor(st) {
 
         super( extend({
-            name: 'asteroid' + (++id),
+            name: 'comet' + (++id),
             r:     10,
 
             trail:   [],
@@ -62,7 +62,7 @@ class Asteroid extends Body {
         const ix = source.x + nV[0] * source.r
         const iy = source.y + nV[1] * source.r
 
-        lib.vfx.impact(lab.port, ix, iy, impactAngle, env.style.color.asteroid.impact, 200)
+        lib.vfx.impact(lab.port, ix, iy, impactAngle, env.style.color.comet.impact, 200)
         lib.sfx('impact')
 
         lab.port.spawn( dna.space.MineralDeposit, {
@@ -94,7 +94,7 @@ class Asteroid extends Body {
             const mark = this.trail[i]
             const factor = 1 - i/MAX_TRAIL
             alpha(factor)
-            fill( env.style.color.asteroid.base )
+            fill( env.style.color.comet.base )
             circle( mark[0], mark[1], hr + hr * factor)
         }
         restore()
@@ -102,7 +102,7 @@ class Asteroid extends Body {
         translate( this.x, this.y )
         rotate(this.dir)
 
-        fill( env.style.color.asteroid.base )
+        fill( env.style.color.comet.base )
         circle( 0, 0, r )
 
         super.draw()

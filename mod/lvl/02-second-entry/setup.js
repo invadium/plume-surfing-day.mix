@@ -1,6 +1,6 @@
 function setup() {
     env.beltRadius = 1500
-    env.asteroidFq   = env.tune.asteroid.baseFq
+    env.cometFq   = env.tune.comet.baseFq
 
     // central planet
     lab.port.spawn( dna.space.Planet, {

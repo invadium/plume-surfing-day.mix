@@ -19,7 +19,7 @@ const tune = {
         varSeismicChargeRate:  4,
     },
 
-    asteroid: {
+    comet: {
         baseFq:    .1,
         baseMass:   4,
         varMass:    12,
@@ -51,7 +51,7 @@ const tune = {
 
     source: {
         cosmology:  101,
-        asteroid:   109,
+        comet:      109,
         events:     202,
         bot:        303,
         background: 404,
