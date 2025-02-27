@@ -161,6 +161,8 @@ class Creature extends Body {
 
     evo(dt) {
         super.evo(dt)
+
+        if (this._warped && math.length(this.x, this.y) < this.warpR) this._warped = false
     }
 
     draw() {
@@ -251,10 +253,12 @@ class Creature extends Body {
 
     warpSpace() {
         // log(`warping ${this.getTitle()}!`)
+        if (this._warped) return
         lib.vfx.warpFX(lab.port, this.x, this.y, env.style.color.warp.out)
         this.x = -this.x
         this.y = -this.y
         lib.vfx.warpFX(lab.port, this.x, this.y, env.style.color.warp.back)
+        this._warped = true
     }
 
     kill(source) {
