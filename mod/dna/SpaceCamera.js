@@ -44,6 +44,22 @@ class SpaceCamera extends SlideCamera {
         if (this.zoomTarget < this.minZoom) this.zoomTarget = this.minZoom
     }
 
+    maxVisibleWidth() {
+        return ctx.width / this.minZoom
+    }
+
+    maxVisibleHeight() {
+        return ctx.height / this.minZoom
+    }
+
+    visibleWidth() {
+        return ctx.width / this.scale
+    }
+
+    visibleHeight() {
+        return ctx.height / this.scale
+    }
+
     evo(dt) {
         super.evo(dt)
 

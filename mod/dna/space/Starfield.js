@@ -1,8 +1,3 @@
-const FQ = 1
-const MAX_STARS = 256
-const GALAXY_ROT_SPEED = 0.05
-const PARALLAX_FACTOR  = 10
-
 class Starfield {
 
     constructor(st) {
@@ -31,11 +26,16 @@ class Starfield {
             this.stars.push(star)
             star.id = this.stars.length
         }
+
+        const { baseR, varR } = env.tune.starfield
+        const z = sqrt(this.source.rndf())
+
         extend(star, {
             x:    1,
             y:    this.source.rndf(),
-            z:    this.source.rndf(),
-            r:    1 + 6 * this.source.rndf(), // TODO factor in z-value to make stars in the distance smaller
+            z:    z,
+            //r:    1 + 6 * this.source.rndf(), // TODO factor in z-value to make stars in the distance smaller
+            r:    baseR + varR * (1 - z),
             c:    this.source.rnde(env.style.color.star),
             dead: false,
         }, st)
@@ -48,7 +48,7 @@ class Starfield {
     }
 
     populate() {
-        for (let i = 0; i < MAX_STARS; i++) {
+        for (let i = 0; i < env.tune.starfield.maxStars; i++) {
             this.spawnStar({
                 x:   this.source.rndf(),
             })
@@ -56,28 +56,51 @@ class Starfield {
     }
 
     evo(dt) {
+        const { baseDrift, varDrift } = env.tune.starfield
+
         let alive = 0
         const stars = this.stars
         for (let i = stars.length - 1; i >= 0; i--) {
             const star = stars[i]
             if (!star.dead) {
-                star.x -= (GALAXY_ROT_SPEED * dt) / ((1 + star.z) * PARALLAX_FACTOR)
+                star.x -= (baseDrift + varDrift * (1 - star.z)) * dt
                 if (star.x < 0) this.killStar(star)
                 else alive ++
             }
         }
-        if (alive < MAX_STARS) this.spawnStar()
+        if (alive < env.tune.starfield.maxStars) this.spawnStar()
     }
 
     draw() {
+        const port = lab.port,
+                 W = port.maxVisibleWidth(),
+                 H = port.maxVisibleHeight(),
+                 s = port.scale
+
         const stars = this.stars
         for (let i = stars.length - 1; i >= 0; i--) {
             const star = stars[i]
             if (!star.dead) {
-                const sx = rx(star.x),
-                      sy = ry(star.y)
-                fill(star.c)
-                circle(sx, sy, star.r)
+                const wx  = 2 * (star.x * W - .5 * W),
+                      wy  = 2 * (star.y * H - .5 * H),
+                      wpx = (wx - port.x),
+                      wpy = (wy - port.y),
+                      psx = (wx / W) * ctx.width,
+                      psy = (wy / H) * ctx.height,
+                      plx = wpx * s,
+                      ply = wpy * s,
+                      px  = psx + (plx - psx) * (1 - star.z),
+                      py  = psy + (ply - psy) * (1 - star.z), 
+                      sx  = px + .5 * ctx.width,
+                      sy  = py + .5 * ctx.height
+
+                if (sx >= -star.r
+                        && sx <= ctx.width + star.r
+                        && sy >= -star.r
+                        && sy <= ctx.height + star.r) {
+                    fill(star.c)
+                    circle(sx, sy, star.r)
+                }
             }
         }
     }

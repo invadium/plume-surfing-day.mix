@@ -60,6 +60,14 @@ const tune = {
 
     warpProbePeriod: 5,
 
+    starfield: {
+        maxStars:   512,
+        baseR:      1.5,
+        varR:       6,
+        baseDrift: .001,
+        varDrift:  .01,
+    },
+
     debug: {
         mouse: {
             pushForce:    4000, 

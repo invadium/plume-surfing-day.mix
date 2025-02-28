@@ -15,7 +15,11 @@ function evo(dt) {
                 env.status = ''
             }
         } else {
-            env.status = ''
+            if (env.debug) {
+                const wx = round(lab.port.lx(mouse.x)),
+                      wy = round(lab.port.ly(mouse.y))
+                env.status = `${wx}:${wy}`
+            }
         }
 
     } else {
