@@ -1,33 +1,30 @@
 const items = [
     {
         title: 'New Game',
-        select: function() {
-            log('new game handler')
+        select: function(menu) {
+            //trap('game/new')
+            const levelOptions = menu.items[2]
+            const idx = levelOptions.current || 0
+            trap('game/level', {
+                level: idx + 1,
+            })
         },
+    },
+    {
+        title: 'Level',
+        section: true,
+    },
+    {
+        options: [],
     },
     {
         title: 'Options',
         submenu: 'options',
     },
-    {
-        title: 'Second Player',
-        section: true,
-    },
-    ['bot', 'human'],
-    {
-        title: 'music',
-        options: ['on', 'off', 'random'],
-        sync: function() {
-            console.dir(this)
-            log('syncing music to: ' + this.options[this.current])
-        },
-    },
-    {
-        options: [ 'one', 'two', 'three' ],
-    },
     'High Score',
     'Credits',
     {
+        hidden: false,
         title: 'Back',
         select: function() {
             lab.control.state.transitTo('space')

@@ -1,5 +1,4 @@
 const tune = {
-
     G:          2400,
     friction:   20,
     surfaceTug: 20,
@@ -64,8 +63,12 @@ const tune = {
         maxStars:   512,
         baseR:      1.5,
         varR:       6,
-        baseDrift: .001,
-        varDrift:  .01,
+        baseDrift: .0005,
+        varDrift:  .004,
+    },
+
+    title: {
+        hold: 5,
     },
 
     debug: {

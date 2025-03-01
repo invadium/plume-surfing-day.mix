@@ -163,6 +163,7 @@ function deactivateState(state) {
             if (state.onDisable) state.onDisable()
         }
     }
+    if (state.control && isFun(state.control.onDeactivate)) state.control.onDeactivate()
 }
 
 // deactivate all states except the onces provided in the skip list
@@ -218,6 +219,7 @@ function activateState(state) {
             if (state.onEnable) state.onEnable()
         }
     }
+    if (state.control && isFun(state.control.onActivate)) state.control.onActivate()
 }
 
 // define a target state or states based on a fuzzy parameter

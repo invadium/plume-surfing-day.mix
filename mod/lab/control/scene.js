@@ -3,7 +3,7 @@ function clearAll() {
     lab.port._ls.forEach(e => {
         if (e['transient']) return
         defer(() => {
-            log('--- detaching ' + e.name)
+            //log('--- detaching ' + e.name)
             port.detach(e)
         })
     })

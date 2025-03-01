@@ -38,3 +38,18 @@ jam -d --message "Lunch Break" --timer 30
 ```
 With time provided in minutes.
 
+
+
+## How to Debug
+
+Use --warp option to jump over the title and menu screens right into the battle.
+
+```
+jam -d --warp
+```
+
+You can also specify a level to jump into:
+
+```
+jam -d --warp 2
+```
