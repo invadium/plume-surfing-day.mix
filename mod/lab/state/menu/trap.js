@@ -26,4 +26,8 @@ module.exports = {
         log('handling: ' + this.__.itemTitle(item))
     },
 
+    resize() {
+        this.__.adjust()
+    },
+
 }
