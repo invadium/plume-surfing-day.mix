@@ -89,6 +89,13 @@ class Planet extends Body {
         lib.sfx('shake')
     }
 
+    unshake() {
+        this.shakeAt = 0
+        this.waveR = 0
+        this.waveCharge = 0
+        lib.sfx('shake') // TODO cancel sfx
+    }
+
     shockwave() {
         this.waveCharge = this.getShakeCharge() // same shake charge in the wave
         this.waveR = this.getChargeRadius(this.waveCharge)

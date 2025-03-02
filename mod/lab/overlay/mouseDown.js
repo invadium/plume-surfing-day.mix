@@ -34,6 +34,12 @@ function mouseDown(e) {
 
     } else if (e.button === 2) {
         // right click
+        if (env.shakenPlanet) {
+            env.shakenPlanet.unshake()
+            env.shakenPlanet = null
+            return
+        }
+
         if (!env.debug) return
 
         // log world coordinates
