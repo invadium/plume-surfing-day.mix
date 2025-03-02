@@ -30,4 +30,7 @@ module.exports = {
         this.__.adjust()
     },
 
+    mouseDown(e) {
+        this.__.mouseSelect()
+    },
 }

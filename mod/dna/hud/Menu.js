@@ -55,6 +55,7 @@
 const defaultColorTheme = {
     main:        '#f2c157',
     selected:    '#e35730',
+    highlighted: '#de7118',
     deactivated: '#808080',
     disabled:    '#ffff80',
 
@@ -135,6 +136,7 @@ class Menu extends sys.Frame {
         this.y = ry(.5)
         this.w = rx(.5)
         this.h = this.activeItems() * this.step
+        this.zones = []
     }
 
     show() {
@@ -187,6 +189,7 @@ class Menu extends sys.Frame {
                 if (!item.current) item.current = 0
             }
         })
+        this.zones = []
     }
 
     notifyOnShow() {
@@ -328,9 +331,9 @@ class Menu extends sys.Frame {
         if (this.trap.onMove) this.trap.onMove(item)
     }
 
-    right() {
+    right(item) {
         if (this.hidden) return
-        const item = this.currentItem()
+        item = item || this.currentItem()
         if (isSwitch(item)) {
             if (!item.current) item.current = 0
             item.current ++
@@ -355,10 +358,10 @@ class Menu extends sys.Frame {
         if (isFun(this.trap.onMove)) this.trap.onMove(item, this.current)
     }
 
-    select() {
-        const item = this.currentItem()
+    select(item) {
+        item = item || this.currentItem()
         if (isSwitch(item) || isOption(item)) {
-            this.right()
+            this.right(item)
         } else {
             if (isFun(item.select)) {
                 item.select(this)
@@ -375,6 +378,12 @@ class Menu extends sys.Frame {
             if (isFun(this.trap.onSelect)) this.trap.onSelect(item, this.current)
             //lib.sfx('use')
         }
+    }
+
+    mouseSelect() {
+        const i = this.highlightedItem()
+        if (i < 0) return
+        this.select( this.items[i] )
     }
 
     back() {
@@ -431,18 +440,30 @@ class Menu extends sys.Frame {
         }
     }
 
+    highlightedItem() {
+        if (mouse.out || this.zones.length === 0) return -1
+
+        const { x, y } = mouse
+        for (let i = 0; i < this.zones.length; i++) {
+            const zone = this.zones[i]
+            if (x >= zone.x1 && x <= zone.x2
+                && y >= zone.y1 && y <= zone.y2) return zone.id
+        }
+        return -1
+    }
+
     draw() {
         if (!this.items) return // nothing to show!
 
         if (env.debug && this.debug) this.drawDebug()
 
+        const highlighted = this.highlightedItem()
         const n = this.items.length
         const cx = this.x
         const cy = this.y - floor(this.h/2)
 
         alignCenter()
         baseTop()
-        font(env.style.font.menu.head)
 
         const b = this.border
         const x = cx
@@ -461,7 +482,8 @@ class Menu extends sys.Frame {
                   hidden = item? !!item.hidden : false,
                   disabled = item? !!item.disabled : false
             let title,
-                active = true
+                active = true,
+                curFont = env.style.font.menu.head
 
             if (isSimpleItem(item)) {
                 title = item
@@ -488,15 +510,38 @@ class Menu extends sys.Frame {
                     rect(rx+b, y-1, rw-2*b, this.step-2)
                 }
 
+                // text
+                let fillColor
+                if (!active) fillColor = this.color.deactivated
+                else if (disabled) fillColor = this.color.disabled
+                else if (i === highlighted) {
+                    fillColor = this.color.selected
+                    curFont = env.style.font.menuHigh.head
+                } else if (highlighted < 0 && i === this.current) fillColor = this.color.selected
+                else fillColor = this.color.main
 
+                // shadow
+                font(curFont)
                 fill(this.color.shadow)
                 text(title, x + this.shadowShift, y + this.shadowShift)
 
-                if (!active) fill(this.color.deactivated)
-                else if (disabled) fill(this.color.disabled)
-                else if (i === this.current) fill(this.color.selected)
-                else fill(this.color.main)
+
+                fill(fillColor)
                 text(title, x, y)
+                if (!this.zones[i]) {
+                    // calculate zone area
+                    const tw = textWidth(title)
+                    this.zones[i] = {
+                        id: i,
+                        x1: x - tw,
+                        y1: y,
+                        x2: x + tw,
+                        y2: y + this.step,
+                        w:  tw,
+                        h:  this.step,
+                    }
+                }
+
                 y += this.step
             }
         }

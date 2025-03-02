@@ -104,6 +104,10 @@ const style = {
             family: 'moon',
             size:   32,
         },
+        menuHigh: {
+            family: 'moon',
+            size:   36,
+        },
 
         debug: {
             family: 'moon',
