@@ -383,7 +383,10 @@ class Menu extends sys.Frame {
     mouseSelect() {
         const i = this.highlightedItem()
         if (i < 0) return
-        this.select( this.items[i] )
+        
+        const item = this.items[i]
+        if (item.section || item.disabled) return
+        this.select( item )
     }
 
     back() {
