@@ -1,4 +1,6 @@
-const name = 'menu'
-
-const DNA = 'hud/Menu'
+const _menu = {
+    DNA:  'hud/Menu',
+    name: 'menu',
+    warp:  false,
+}
 

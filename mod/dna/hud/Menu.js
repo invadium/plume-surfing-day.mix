@@ -108,6 +108,7 @@ class Menu extends sys.Frame {
             color: defaultColorTheme,
 
             current:  0,
+            warp:     true,
             hidden:   true,
             paused:   true,
             disabled: true,
@@ -150,7 +151,7 @@ class Menu extends sys.Frame {
         this._capture = true
         lab.monitor.controller.bindAll(this)
         if (this.items.preservePos) {
-            this.slideToNextActiveItem()
+            this.touch()
         } else {
             this.setCurrent(0)
         }
@@ -230,7 +231,7 @@ class Menu extends sys.Frame {
 
     setCurrent(current) {
         this.current = current
-        this.slideToNextActiveItem()
+        this.touch()
     }
 
     // select from items provided in st object
@@ -270,42 +271,92 @@ class Menu extends sys.Frame {
         }
     }
 
-    slideToNextActiveItem() {
-        const item = this.items[this.current]
-        if (isObj(item) && item.section) {
-            this.current ++
-            if (this.current >= this.items.length) this.current = 0
-            this.slideToNextActiveItem()
-        }
-    }
+    // slide to the next active menu item
+    //
+    // A service recursive method that is used by next() to silently slide to the next active menu item.
+    slideNext(step) {
+        step = step || 1
+        if (!this.items || step > this.items.length) return false
 
-    next() {
-        if (this.hidden) return
         this.current ++
-        if (this.current >= this.items.length) this.current = 0
+        if (this.current >= this.items.length) {
+            if (this.warp) {
+                this.current = 0
+            } else {
+                this.current = this.items.length - 1
+                return false
+            }
+        }
 
         const item = this.items[this.current]
-        if (isObj(item) && (item.section || item.disabled)) {
-            this.next()
+        if (!item || (isObj(item) && (item.section || item.disabled || item.hidden))) {
+            return this.slideNext(step + 1)
         } else {
-            // landed
-            if (this.trap.onMove) this.trap.onMove(item)
-            //lib.sfx('select')
+            return true
         }
     }
 
-    prev() {
-        if (this.hidden) return
-        this.current --
-        if (this.current < 0) this.current = this.items.length - 1
-
-        const item = this.items[this.current]
-        if (isObj(item) && (item.section || item.disabled)) {
-            this.prev()
-        } else {
-            // landed
+    // select the next menu item
+    next(step) {
+        const prev = this.current
+        if (this.slideNext()) {
+            // landed on the next item
             if (this.trap.onMove) this.trap.onMove(item)
             //lib.sfx('select')
+        } else {
+            this.current = prev
+            if (this.trap.onBlock) this.trap.onBlock(item)
+        }
+    }
+
+    // touch the current menu item, move next if hidden/disabled or a section
+    touch() {
+        if (!this.items) return
+
+        const item = this.items[this.current]
+        if (!item || (isObj(item) && (item.section || item.disabled || item.hidden))) {
+            const prev = this.current
+            if (!this.slideNext()) {
+                this.current = prev
+            }
+        }
+    }
+
+    // slide to the previous active menu item
+    //
+    // A service recursive method that is used by prev() to silently slide to the previous active menu item.
+    slidePrev(step) {
+        step = step || 1
+        if (!this.items || step > this.items.length) return false
+
+        this.current --
+        if (this.current < 0) {
+            if (this.warp) {
+                this.current = this.items.length - 1
+            } else {
+                this.current = 0
+                return false
+            }
+        }
+
+        const item = this.items[this.current]
+        if (!item || (isObj(item) && (item.section || item.disabled || item.hidden))) {
+            return this.slidePrev(step + 1)
+        } else {
+            return true
+        }
+    }
+
+    // move to the previous available menu item
+    prev() {
+        const prev = this.current
+        if (this.slidePrev()) {
+            // landed on the previous item
+            if (this.trap.onMove) this.trap.onMove(item)
+            //lib.sfx('select')
+        } else {
+            this.current = prev
+            if (this.trap.onBlock) this.trap.onBlock(item)
         }
     }
 
@@ -385,7 +436,7 @@ class Menu extends sys.Frame {
         if (i < 0) return
         
         const item = this.items[i]
-        if (item.section || item.disabled) return
+        if (item.section || item.disabled || item.hidden) return
         this.select( item )
     }
 
