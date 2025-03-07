@@ -48,7 +48,7 @@ class GravityEffect {
             closestDist = 999999
         lab.port._ls.forEach(e => {
             if (e instanceof dna.space.Planet) {
-                const d = dist(__.x, __.y, e.x, e.y)
+                const d = distance(__.x, __.y, e.x, e.y)
                 if (d < closestDist) {
                     closestDist = d
                     planet = e

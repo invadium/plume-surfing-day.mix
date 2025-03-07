@@ -13,7 +13,7 @@ function warpSpace() {
     lab.port._ls.forEach(e => {
         if (e.warpSpace
                 && !e.bounded
-                && dist(0, 0, e.x, e.y) > e.warpR) {
+                && distance(0, 0, e.x, e.y) > e.warpR) {
             e.warpSpace()
         }
     })

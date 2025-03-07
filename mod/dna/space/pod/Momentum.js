@@ -185,13 +185,13 @@ class Momentum {
             if (bound) {
                 // test the surface contact
                 let surfaceContact = false
-                const d = dist(bound.x, bound.y, nx, __.y)
+                const d = distance(bound.x, bound.y, nx, __.y)
                 if (d <= __.r + bound.r) {
                     nx = __.x
                     //sV[0] = 0
                     surfaceContact = true
                 }
-                const d2 = dist(bound.x, bound.y, __.x, ny)
+                const d2 = distance(bound.x, bound.y, __.x, ny)
                 if (d2 <= __.r + bound.r) {
                     ny = __.y
                     //sV[1] = 0
