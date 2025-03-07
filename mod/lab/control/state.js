@@ -295,7 +295,10 @@ function transitTo(fuzzyTarget, st, force) {
 
     if (env.state === target.name && !force) return // ignore, we're already at the target state
 
-    env.transition = env.state + ' -> ' + target.name
+    const transition = env.state + ' -> ' + target.name
+    if (env.transition === transition && !force) return // just ignore - we're already in this transition
+    
+    env.transition = transition
     log(`transiting ${env.transition}`)
 
     const ts = {
