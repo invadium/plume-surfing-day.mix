@@ -22,7 +22,12 @@ const items = [
         submenu: 'options',
     },
     'High Score',
-    'Credits',
+    {
+        title: 'Credits',
+        select: function() {
+            lab.control.state.transitTo('credits')
+        }
+    },
     {
         hidden: false,
         title: 'Back',

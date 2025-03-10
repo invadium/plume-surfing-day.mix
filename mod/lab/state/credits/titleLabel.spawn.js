@@ -1,9 +1,9 @@
 const titleLabel = {
     DNA: 'hud/Label',
     rx:  .5,
-    ry:  .2,
+    ry:  .15,
     font:  env.style.font.title.head,
-    color: env.style.color.title,
+    color: env.style.color.credits.title,
     text: 'Credits',
 }
 

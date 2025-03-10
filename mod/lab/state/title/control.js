@@ -2,9 +2,7 @@ function onActivate() {
     this.startedAt = env.time
 }
 
-function onDeactivate() {
-    log("=== SHOWING TITLE ===")
-}
+function onDeactivate() {}
 
 function next() {
     trap('state/menu')

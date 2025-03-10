@@ -11,6 +11,12 @@ const style = {
     color: {
         title: hsl(.62, .7, .7),
 
+        credits: {
+            title: '#d0763e',
+            front: '#ebac4d',
+            back:  '#4d2235',
+        },
+
         space: '#2a1c31',
 
         shakeCharge: '#d0763e',
@@ -108,12 +114,20 @@ const style = {
             family: 'moon',
             size:   36,
         },
+        credits: {
+            family: 'moon',
+            size:   32,
+        },
 
         debug: {
             family: 'moon',
             size: 24,
         },
     },
+
+    credits: {
+        keep: 15,
+    }
 }
 
 function classifyFonts() {
