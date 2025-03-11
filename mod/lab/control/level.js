@@ -4,4 +4,6 @@ function load(level) {
     lab.control.scene.clearAll()
 
     if (isFun(level.setup)) level.setup()
+
+    env.level = level
 }

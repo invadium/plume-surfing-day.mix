@@ -89,7 +89,7 @@ function isOption(item) {
 }
 
 
-class Menu extends sys.Frame {
+class Menu extends sys.LabFrame {
 
     constructor(st) {
         super( extend({
@@ -507,8 +507,9 @@ class Menu extends sys.Frame {
     }
 
     draw() {
-        if (!this.items) return // nothing to show!
+        super.draw()
 
+        if (!this.items) return // nothing to show!
         if (env.debug && this.debug) this.drawDebug()
 
         const highlighted = this.highlightedItem()

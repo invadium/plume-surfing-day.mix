@@ -15,7 +15,8 @@ const items = [
         section: true,
     },
     {
-        options: [],
+        id:      'levels',
+        options:  [],
     },
     {
         title: 'Options',
@@ -29,8 +30,9 @@ const items = [
         }
     },
     {
-        hidden: false,
-        title: 'Back',
+        id:     'resume',
+        hidden:  true,
+        title:  'Resume Game',
         select: function() {
             lab.control.state.transitTo('space')
         },

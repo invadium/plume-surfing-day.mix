@@ -11,8 +11,12 @@ const style = {
     color: {
         title: hsl(.62, .7, .7),
 
+        menu: {
+            title: '#ebac4d',
+        },
+
         credits: {
-            title: '#d0763e',
+            title: '#ebac4d',
             front: '#ebac4d',
             back:  '#4d2235',
         },
