@@ -449,6 +449,10 @@ class Menu extends sys.LabFrame {
 
     actuate(action) {
         this.lastTouch = Date.now()
+
+        const i = this.highlightedItem()
+        if (i >= 0) return
+
         switch(action.name) {
             case "UP":    this.prev();   break;
             case "LEFT":  this.left();   break;

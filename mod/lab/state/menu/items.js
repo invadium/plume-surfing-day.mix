@@ -22,7 +22,6 @@ const items = [
         title: 'Options',
         submenu: 'options',
     },
-    'High Score',
     {
         title: 'Credits',
         select: function() {
