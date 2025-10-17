@@ -122,6 +122,10 @@ const style = {
             family: 'moon',
             size:   32,
         },
+        titleBar: {
+            family: 'moon',
+            size:    25,
+        },
 
         debug: {
             family: 'moon',

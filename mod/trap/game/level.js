@@ -8,6 +8,7 @@ function level(st) {
     }
 
     if (!nextLevel) throw new Error(`Level [${st.level}] is not found!`)
+    log(`=== Level [${nextLevel}] ===`)
     lab.control.level.load(nextLevel)
     lab.control.state.transitTo('space', st)
 }

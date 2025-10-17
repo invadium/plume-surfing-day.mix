@@ -57,6 +57,7 @@ class Planet extends Body {
                 y:     y + R * sin(tau),
             })
         }
+        lab.control.game.activateTribe(tribe)
     }
 
     spawnCrack() {
