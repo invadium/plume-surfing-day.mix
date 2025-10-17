@@ -24,5 +24,5 @@ module.exports = function(name, vol, pan) {
     }
 
     //log(`plaing [${name}]`)
-    sfx(clip, vol, pan)
+    sys.sfx(clip, vol, pan)
 }

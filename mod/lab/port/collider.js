@@ -18,7 +18,7 @@ function evo(dt) {
             }
             */
         },
-        e => (e.solid && !e.dead)
+        e => (e && e.solid && !e.dead)
     )
 }
 
