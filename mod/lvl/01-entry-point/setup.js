@@ -3,7 +3,7 @@ function setup() {
     env.cometFq    = env.tune.comet.baseFq
 
     // central planet
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Gram',
         tribe: 1,
         pop:   3,
@@ -16,7 +16,7 @@ function setup() {
 
 
     // left-bottom green sector
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Odin',
         tribe: 1,
         pop:   3,
@@ -27,7 +27,7 @@ function setup() {
         gR:    500,
     })
 
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Odin II',
         tribe: 1,
         pop:   4,
@@ -37,7 +37,7 @@ function setup() {
         kR:    400,
         gR:    500,
     })
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Obidikat',
         x: -1550, 
         y: 689, 
@@ -47,7 +47,7 @@ function setup() {
     })
 
 
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Marduk',
         x:     550,
         y:     -300,
@@ -56,7 +56,7 @@ function setup() {
         gR:    400,
     })
 
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Lugaluru',
         x:     350,
         y:     280,
@@ -67,7 +67,7 @@ function setup() {
 
 
     // left-upper blue corner
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Seshet',
         tribe: 3,
         pop:   5,
@@ -78,7 +78,7 @@ function setup() {
         gR:    600,
     })
 
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Seshet II',
         tribe: 3,
         pop:   3,
@@ -89,7 +89,7 @@ function setup() {
         gR:    600,
     })
 
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Ishar III',
         tribe: 3,
         pop:   2,
@@ -100,7 +100,7 @@ function setup() {
         gR:    600,
     })
 
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Ishar',
         tribe: 0,
         x: -1385,
@@ -112,7 +112,7 @@ function setup() {
 
 
     // upper-right red corner of universe
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Starblade',
         tribe: 2,
         pop:   5,
@@ -123,7 +123,7 @@ function setup() {
         gR:    700,
     })
 
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Startopia',
         tribe: 2,
         pop:   3,
@@ -137,7 +137,7 @@ function setup() {
 
 
     // lower-right corner
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Vulkan',
         tribe: 4,
         pop:   7,
@@ -148,7 +148,7 @@ function setup() {
         gR:    800,
     })
 
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Vulkan II',
         tribe: 4,
         pop:   3,
@@ -160,7 +160,7 @@ function setup() {
     })
 
     // some oranges unexpectedly here
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Vulkan III',
         tribe: 2,
         pop:   2,

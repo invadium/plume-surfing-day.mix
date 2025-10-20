@@ -3,7 +3,7 @@ function setup() {
     env.cometFq   = env.tune.comet.baseFq
 
     // central planet
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Gram',
         tribe: 1,
         pop:   5,
@@ -16,7 +16,7 @@ function setup() {
 
 
     // left-bottom green sector
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Odin',
         tribe: 0,
         pop:   2,
@@ -27,7 +27,7 @@ function setup() {
         gR:    500,
     })
 
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Marduk',
         tribe: 2,
         pop:   2,
@@ -38,7 +38,7 @@ function setup() {
         gR:    400,
     })
 
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Lugaluru',
         tribe: 4,
         pop:   2,
@@ -50,7 +50,7 @@ function setup() {
     })
 
     // left-upper blue corner
-    lab.port.spawn( dna.space.Planet, {
+    lab.port.spawn('Planet', {
         name: 'Seshet',
         tribe: 3,
         pop:   2,

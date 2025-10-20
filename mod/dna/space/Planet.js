@@ -51,7 +51,7 @@ class Planet extends Body {
         for (let i = 0; i < this.pop; i++) {
             const tau = lib.source.cosmology.rnda()
             const R   = (1.2 + .8 * lib.source.cosmology.rndf()) * r
-            lab.port.spawn( dna.space.Creature, {
+            lab.port.spawn('Creature', {
                 tribe: tribe,
                 x:     x + R * cos(tau),
                 y:     y + R * sin(tau),

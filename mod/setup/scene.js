@@ -1,4 +1,4 @@
 function scene() {
-    lab.port.spawn( dna.space.BeltProbe )
+    lab.port.spawn(dna.BeltProbe)
 }
 scene.Z = 41
