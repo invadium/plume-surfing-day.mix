@@ -36,7 +36,7 @@ class GravityEffect {
         }, st)
     }
 
-    onInstall() {
+    init() {
         if (!this.__.momentum) throw new Error('[${this.name}] a momentum pod is required for gravity to work!')
     }
 

@@ -19,7 +19,7 @@ class Planet extends Body {
               waveR:  0,
         }, st) )
 
-        this.install([
+        this.attachAll([
             new dna.space.pod.SolidCircle({
                 r: this.r,
             }),
@@ -31,7 +31,7 @@ class Planet extends Body {
         for (let i = 0; i < this.cracks; i++) this.spawnCrack()
 
         if (env.debug) {
-            this.install([
+            this.attachAll([
                 // new dna.space.pod.RadiusProbe(),
                 //new dna.space.pod.CoordinatesProbe({
                 //    x: -this.r,
@@ -64,7 +64,7 @@ class Planet extends Body {
         const tau = lib.source.cosmology.rnda()
         if (this.isCrackedArea(tau)) return
 
-        this.install( new dna.space.pod.Crack({
+        this.attach( new dna.space.pod.Crack({
             tau: tau,
             depth: ceil(this.r - .4 * this.r - .3 * this.r * lib.source.cosmology.rndf()),
         }) )

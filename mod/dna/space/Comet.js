@@ -13,7 +13,7 @@ class Comet extends Body {
             trail:   [],
         }, st) )
 
-        this.install([
+        this.attachAll([
             new dna.space.pod.SolidCircle({
                 r: this.r,
             }),
@@ -25,7 +25,7 @@ class Comet extends Body {
             }),
         ])
 
-        if (env.debug) this.install([
+        if (env.debug) this.attachAll([
             //new dna.space.pod.RadiusProbe(),
             //new dna.space.pod.CoordinatesProbe({
             //    x: -this.r,

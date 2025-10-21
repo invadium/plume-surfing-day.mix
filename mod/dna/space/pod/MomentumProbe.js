@@ -8,8 +8,8 @@ class MomentumProbe {
         }, st)
     }
 
-    onInstall() {
-        if (!this.__.momentum) throw new Error('[momentumProbe] a momentum pod is expected to be installed')
+    init() {
+        if (!this.__.momentum) throw new Error('[momentumProbe] a momentum pod is expected to be attached!')
     }
 
     draw() {

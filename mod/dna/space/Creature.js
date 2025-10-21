@@ -26,7 +26,7 @@ class Creature extends Body {
             warpR: env.beltRadius,
         }, st) )
 
-        this.install([
+        this.attachAll([
             new dna.space.pod.Momentum({
                 mass: 100,
             }),
@@ -41,7 +41,7 @@ class Creature extends Body {
         ])
 
         if (env.debug) {
-            this.install([
+            this.attachAll([
                 //new dna.space.pod.RadiusProbe(),
                 //new dna.space.pod.CoordinatesProbe({
                 //    x: -this.r,

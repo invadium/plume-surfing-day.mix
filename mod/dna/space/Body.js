@@ -9,11 +9,8 @@ class Body extends LabFrame {
             mass:  100,
         }, st) )
 
-        // install pods
-        const body = this
-        if (isArray(this.pods)) {
-            this.pods.forEach(pod => body.install(pod))
-        }
+        // attach pods
+        if (isArray(this.pods)) this.attachAll(this.pods)
     }
 
     // get a set of body-local coordinates from the provided world/parent coordinates
@@ -49,38 +46,38 @@ class Body extends LabFrame {
         }
     }
 
-    install(pod) {
+    attach(pod) {
+        /*
         if (isArray(pod)) {
             for (let i = 0; i < pod.length; i++) {
                 const p = pod[i]
-                this.install(p)
+                this.attach(p)
             }
             return pod
         }
+        */
 
-        // determine the install alias
+        // determine the alias
         const name  = pod.name
         const alias = pod.alias || pod.name
 
-        // run pre-install procedures
-        if (isFun(pod.preInstall)) pod.preInstall(this)
+        // run pre-attach procedures
+        if (isFun(pod.preAttach)) pod.preAttach(this)
 
-        // uninstall the previous named pod if present
-        this.uninstall(name)
+        // detach the previous named pod if present
+        this.detach(name)
 
         // deactivate the previous alias pods if present
         const prevPod = this[alias]
         if (prevPod) {
             this.deactivatePod(prevPod)
-            if (prevPod.name === prevPod.alias) this.uninstall(prevPod)
+            if (prevPod.name === prevPod.alias) this.detach(prevPod)
         }
 
-        // install a new one
-        this.attach(pod, pod.name || pod.alias)
+        // attach a new one
+        LabFrame.prototype.attach.call(this, pod, pod.name || pod.alias)
         //if (pod.name !== alias) this[alias] = pod
         this.activatePod(pod)
-
-        if (isFun(pod.onInstall)) pod.onInstall()
 
         return pod
     }
@@ -139,12 +136,11 @@ class Body extends LabFrame {
         return !pod.deactivated
     }
 
-    uninstall(targetPod) {
+    detach(targetPod) {
         const pod = this._getPod(targetPod)
         if (!pod) return false
 
-        if (isFun(pod.onUninstall)) pod.onUninstall()
-        this.detach(pod)
+        LabFrame.prototype.detach.call(this, pod)
         if (pod.alias && pod.alias !== pod.name) {
             delete this[pod.alias]
         }

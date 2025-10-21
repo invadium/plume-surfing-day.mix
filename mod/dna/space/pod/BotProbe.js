@@ -10,8 +10,8 @@ class BotProbe {
         }, st)
     }
 
-    onInstall() {
-        if (!this.__.bot) throw new Error('[${this.name}] a bot pod MUST be installed first!')
+    init() {
+        if (!this.__.bot) throw new Error('[${this.name}] a bot pod MUST be attached first!')
     }
 
     draw() {

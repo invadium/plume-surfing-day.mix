@@ -14,7 +14,7 @@ class Crack {
         }, st)
     }
 
-    onInstall() {
+    init() {
         this.r2 = this.__.r
         this.r1 = this.r2 - this.depth
         this.seismicCapacity = round(env.tune.planet.seismicCapacityFactor * this.depth)
