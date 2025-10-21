@@ -36,13 +36,13 @@ class Crack {
 
         log(`[${planet.name}/${this.alias}] released energy: ${round(releasedEnergy)}`)
         //log(`seismic capacity: ${this.seismicCapacity}, depth: ${this.depth}`)
-        const lower  = math.normalizeAngle(this.tau - env.tune.plume.effectArea)
-        const higher = math.normalizeAngle(this.tau + env.tune.plume.effectArea)
+        const lower  = math.biNormalizeAngle(this.tau - env.tune.plume.effectArea)
+        const higher = math.biNormalizeAngle(this.tau + env.tune.plume.effectArea)
         lab.port._ls.forEach(e => {
             if (!e.dead
                     && (e instanceof dna.space.Creature || e instanceof dna.space.MineralDeposit)
                     && e.momentum.surface === planet) {
-                const tau = math.normalizeAngle(e.polar[0])
+                const tau = math.biNormalizeAngle(e.polar[0])
                 if (lib.util.angleInRange(tau, lower, higher)) {
                     e.momentum.surfaceJumpAction(releasedEnergy)
                 }

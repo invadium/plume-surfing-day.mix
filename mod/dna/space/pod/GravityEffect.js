@@ -13,7 +13,7 @@ function creatureTug(planet, __, d, dt) {
     }
 
     // setup angular tug - creatures should land on their feet
-    const tau = math.normalizeAngle(phi - HALF_PI)
+    const tau = math.biNormalizeAngle(phi - HALF_PI)
     __.momentum.angularTarget(tau)
 }
 
