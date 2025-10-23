@@ -1,4 +1,4 @@
-function postSetup() {
+function start() {
     if (env.config.warp) {
         // fast-jump into a level
         if (typeof env.config.warp === 'boolean') {

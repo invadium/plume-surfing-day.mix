@@ -1,4 +1,3 @@
-
 function tribes() {
     const stat = []
 
@@ -32,4 +31,8 @@ function tribes() {
     }
 
     return stat.filter(e => e.active)
+}
+
+function onNewSector() {
+    // TODO clear the stat
 }

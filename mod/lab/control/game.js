@@ -6,7 +6,7 @@ function inSpace() {
     return (env.state === 'space')
 }
 
-function enterNewSector() {
+function setupTribes() {
     this.tribes = []
     for (let i = 0; i < env.tune.tribe.max; i++) {
         this.tribes[i] = false
@@ -16,12 +16,14 @@ function enterNewSector() {
 function loadSector(sector) {
     log(`Loading up sector [${sector.title}]...`)
 
-    lab.control.scene.clearAll()
-    this.enterNewSector()
+    clearAll()
+    this.setupTribes()
 
     if (isFun(sector.setup)) sector.setup()
 
     env.sector = sector
+
+    lab.on('newSector')
 }
 
 function activateTribe(i) {
@@ -38,4 +40,15 @@ function activateTribe(i) {
 function isTribeActive(i) {
     if (!this.tribes) return false
     return this.tribes[i]
+}
+
+function clearAll() {
+    const port = lab.port
+    lab.port._ls.forEach(e => {
+        if (e['transient']) return
+        defer(() => {
+            //log('--- detaching ' + e.name)
+            port.detach(e)
+        })
+    })
 }

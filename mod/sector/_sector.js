@@ -34,14 +34,22 @@ const _sector = {
     },
 
     locate: function(id) {
-        if (isNum(id)) return this._ls[id]
+        const _ = this
 
-        const nid = parseInt(id)
-        if (isNaN(nid)) {
-            // expect an alias
-            this.registry[id]
-        } else {
-            return this._ls[nid]
+        function describe() {
+            if (isNum(id)) return _._ls[id]
+
+            const nid = parseInt(id)
+            if (isNaN(nid)) {
+                // expect an alias
+                return _.registry[id]
+            } else {
+                return _._ls[nid]
+            }
         }
+
+        const def    = _.default,
+              sector = describe()
+        if (def && sector) return augment({}, def, sector)
     },
 }
