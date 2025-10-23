@@ -1,12 +1,6 @@
-function compileLevelList() {
-    const levelsOption = this.__.items.filter(e => e.id === 'levels')[0]
-
-    const options = []
-    levelsOption.options = options
-
-    $.lvl._ls.forEach((level, i)=> {
-        options.push(`${i + 1} - ${level.info.title}`)
-    })
+function setupSectorsList() {
+    const sectorsOption = this.__.items.filter(e => e.id === 'sectors')[0]
+    sectorsOption.options = $.sector.menuList
 }
 
 function toggleResumeGameVisibility() {
@@ -16,7 +10,7 @@ function toggleResumeGameVisibility() {
 }
 
 function onActivate() {
-    this.compileLevelList()
+    this.setupSectorsList()
     this.toggleResumeGameVisibility()
 }
 

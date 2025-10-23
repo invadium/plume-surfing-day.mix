@@ -9,7 +9,7 @@ class TitleBar {
     draw() {
         if (!lab.control.game.inSpace()) return
 
-        const stat = lab.control.stat.tribes()
+        const stat = lab.monitor.stat.tribes()
 
         const f = env.style.font.titleBar
         const Y = .5 * f.size

@@ -1,3 +1,4 @@
+
 function tribes() {
     const stat = []
 

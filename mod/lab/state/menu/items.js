@@ -2,20 +2,19 @@ const items = [
     {
         title: 'New Game',
         select: function(menu) {
-            //trap('game/new')
-            const levelOptions = menu.items[2]
-            const idx = levelOptions.current || 0
-            trap('game/level', {
-                level: idx + 1,
+            const sectorSelector = menu.items.filter(e => e.id === 'sectors')[0]
+            const selected = sectorSelector.options[sectorSelector.current || 0]
+            trap('game/new', {
+                sector: selected.id,
             })
         },
     },
     {
-        title: 'Level',
+        title: 'Sector',
         section: true,
     },
     {
-        id:      'levels',
+        id:      'sectors',
         options:  [],
     },
     {

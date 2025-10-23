@@ -1,16 +1,27 @@
 function inProgress() {
-    return !!env.level
+    return !!env.sector
 }
 
 function inSpace() {
     return (env.state === 'space')
 }
 
-function newLevel() {
+function enterNewSector() {
     this.tribes = []
     for (let i = 0; i < env.tune.tribe.max; i++) {
         this.tribes[i] = false
     }
+}
+
+function loadSector(sector) {
+    log(`Loading up sector [${sector.title}]...`)
+
+    lab.control.scene.clearAll()
+    this.enterNewSector()
+
+    if (isFun(sector.setup)) sector.setup()
+
+    env.sector = sector
 }
 
 function activateTribe(i) {

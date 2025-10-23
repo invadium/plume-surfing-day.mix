@@ -14,7 +14,6 @@ function setup() {
         gR:    450,
     })
 
-
     // left-bottom green sector
     lab.port.spawn('Planet', {
         name: 'Odin',

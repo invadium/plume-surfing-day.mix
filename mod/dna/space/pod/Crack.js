@@ -34,7 +34,7 @@ class Crack {
         if (releasedEnergy > this.energy) releasedEnergy = this.energy
         this.energy -= releasedEnergy
 
-        log(`[${planet.name}/${this.alias}] released energy: ${round(releasedEnergy)}`)
+        //log(`[${planet.name}/${this.alias}] released energy: ${round(releasedEnergy)}`)
         //log(`seismic capacity: ${this.seismicCapacity}, depth: ${this.depth}`)
         const lower  = math.biNormalizeAngle(this.tau - env.tune.plume.effectArea)
         const higher = math.biNormalizeAngle(this.tau + env.tune.plume.effectArea)

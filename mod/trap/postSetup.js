@@ -2,15 +2,13 @@ function postSetup() {
     if (env.config.warp) {
         // fast-jump into a level
         if (typeof env.config.warp === 'boolean') {
-            trap('game/level', {
-                level:  1,
+            trap('game/new', {
+                sector: 1,
                 fadein: 0,
             })
         } else {
-            let level = parseInt(env.config.warp)
-            if (isNaN(level)) level = env.config.warp // probably a level title
-            trap('game/level', {
-                level:  level,
+            trap('game/new', {
+                sector: env.config.warp,
                 fadein: 0,
             })
         }
